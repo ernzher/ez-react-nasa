@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { 
 	IconButton,
 	Menu,
@@ -15,9 +14,9 @@ interface Props {
 	isOpen: boolean
 }
 
-const MenuToggle = ({ toggle, isOpen }:Props) => {
+const MenuToggle = ({ toggle, isOpen }: Props) => {
 	return (
-		<Box display={{ base: 'block', md: 'none'}}>
+		<Box display={{ base: 'block', md: 'none'}} zIndex={20}>
 			<Menu>
 				<MenuButton
 					as={IconButton}
