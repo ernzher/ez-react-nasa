@@ -1,21 +1,16 @@
 import React from 'react'
 import { 
     Box,
-    Image,
-    Flex,
-    Stack,
-    VStack,
-    Text,
-    useColorModeValue,
-    Button
 } from '@chakra-ui/react'
 import Banner from '../components/home/Banner'
+import PokeList from '../components/home/PokeList'
 
 const Home = () => {
    
     return (
        <Box position="relative">
            <Banner />
+           <PokeList />
         </Box>
     )
 }

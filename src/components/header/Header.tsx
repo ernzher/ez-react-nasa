@@ -26,7 +26,7 @@ const Header = () => {
             top={0} 
             boxShadow={box_shadow} 
             opacity="0.9"
-            zIndex={50}
+            zIndex={100}
         >
             {/* overlay */}
             <Box    
