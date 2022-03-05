@@ -13,7 +13,7 @@ import TypeBadge from '../common/TypeBadge'
 
 const PokeCard = () => {
     const card_color = useColorModeValue("gray.50", "gray.700")
-    const box_shadow = useColorModeValue("lg", "0 10px 15px -3px rgba(255, 255, 255, 0.1),0 4px 6px -2px rgba(255, 255, 255, 0.05)")
+    const box_shadow = useColorModeValue("2xl", "0 10px 15px -3px rgba(255, 255, 255, 0.1),0 4px 6px -2px rgba(255, 255, 255, 0.05)")
     return (
         <Box 
             bg={card_color} 
@@ -35,8 +35,9 @@ const PokeCard = () => {
                 <Text fontSize={['md', 'lg','xl']} mt={0}>Fletchinder</Text>
                 <HStack py={2} spacing={1}>
                     <TypeBadge type="electric"/>
-                    <TypeBadge type="ghost"/>
                     <TypeBadge type="grass"/>
+                    
+
                 </HStack>
             </VStack>
         </Box>        

@@ -14,7 +14,7 @@ interface Props {
 	isOpen: boolean
 }
 
-const MenuToggle = ({ toggle, isOpen }: Props) => {
+const MenuToggle: React.FC<Props> = ({ toggle, isOpen }) => {
 	return (
 		<Box display={{ base: 'block', md: 'none'}} zIndex={20}>
 			<Menu>

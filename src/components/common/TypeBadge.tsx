@@ -5,7 +5,21 @@ interface Props {
     type: string,
 }
 
-const TypeBadge = ({type}: Props) => {
+const TypeBadge: React.FC<Props> = ({type}) => {
+    const font_color = (type: string): string => {
+        switch(type) {
+            case 'grass': 
+            case 'psychic': 
+            case 'electric': 
+            case 'poison': 
+            case 'fire': 
+            case 'ice': 
+            case 'flying': 
+            case 'fairy': 
+            case 'steel': return 'black';
+            default: return 'white';
+        } 
+    }
     return (
         <Box 
             px={1}  
@@ -14,7 +28,7 @@ const TypeBadge = ({type}: Props) => {
             textAlign="center" 
             borderRadius={5}
         >
-            <Text color="black" fontSize={[ 'x-small', 'xs','sm' ]}>{type}</Text>
+            <Text color={font_color(type)} fontSize={[ 'x-small', 'xs','sm' ]}>{type}</Text>
         </Box>
     )
 }
