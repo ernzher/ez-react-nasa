@@ -13,13 +13,21 @@ import { ColorModeSwitcher } from './ColorModeSwitcher'
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const box_shadow = useColorModeValue('sm', '')
-    const opacity = useColorModeValue('90%', '100%')
-
+    const box_shadow = useColorModeValue('md', '')
+    const bg_color = useColorModeValue("white", "gray.800")
     const toggle = () => setIsOpen(!isOpen)
     
     return (
-        <Box position='fixed' left={0} right={0} top={0} boxShadow={box_shadow} opacity={opacity}>
+        <Box 
+            position='fixed' 
+            bg={bg_color} 
+            left={0} 
+            right={0} 
+            top={0} 
+            boxShadow={box_shadow} 
+            opacity="0.9"
+            zIndex={50}
+        >
             {/* overlay */}
             <Box    
                 position='absolute' 
@@ -38,8 +46,8 @@ const Header = () => {
                 <Logo />
                 <MenuLink />
                 <Flex justifyContent='right' alignItems='center'>
-                    <MenuToggle toggle={toggle} isOpen={isOpen} />
                     <ColorModeSwitcher  />
+                    <MenuToggle toggle={toggle} isOpen={isOpen} />
                 </Flex>
             </SimpleGrid>
         </Box>

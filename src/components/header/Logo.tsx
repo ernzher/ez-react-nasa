@@ -13,7 +13,7 @@ const Logo = () => {
                 <Image
                     boxSize='32px'
                     objectFit='cover'
-                    src='assets/images/pokeball.png'
+                    src='assets/images/logo.png'
                     alt='Logo'
                 />
                 <Text fontFamily='Roboto Mono' fontWeight='light' fontSize='2xl'>POKÉDEX</Text>

@@ -1,10 +1,17 @@
 import {extendTheme } from "@chakra-ui/react";
+import { FaBlackTie } from "react-icons/fa";
 
 const theme = extendTheme({
+    styles: {
+        global: {
+            body: {
+                transition: "all 0.6s ease-in-out"
+            }
+        }
+    },
     colors: {
         brand: {
-            100: "#30D5C8",
-            
+            100: "#29DEB7",
         },
         type: {
             grass: "#A8E769",
@@ -28,8 +35,8 @@ const theme = extendTheme({
         },
     },
     fonts: {
-        heading: 'Lato, sans-serif',
-        body: 'Lato, sans-serif'
+        heading: 'Roboto, sans-serif',
+        body: 'Jost, sans-serif',
     },
     components: {
         Link: {
@@ -45,12 +52,27 @@ const theme = extendTheme({
     
         },
         Button:{
+            baseStyle: {
+                fontFamily: 'Jost',
+                fontWeight: 'normal',
+                _hover: {
+                    filter: "brightness(1.1)"
+                },
+                _focus: {
+                    boxShadow: "none"
+                }
+            },
             variants: {
                 pri_gradient: {
-                    bgGradient: "linear(to-r, , #24adf3, #29deb7)"
+                    bgGradient: "linear(to-r, , #24adf3, #29deb7)",
+                    color: "white",
+                    borderRadius: 30,
+
                 },
                 snd_gradient: {
-                    bgGradient: "linear(to-r, #6c90ff, #7ef2f6)"
+                    bgGradient: "linear(to-r, #6c90ff, #7ef2f6)",
+                    color: "black",
+                    borderRadius: 30,
                 }
             }
         }

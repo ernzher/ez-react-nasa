@@ -7,6 +7,7 @@
     "@chakra-ui/react": "^1.8.6",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
+    "@fontsource/jost": "^4.5.4",
     "@fontsource/lato": "^4.5.2",
     "@fontsource/roboto": "^4.5.3",
     "@fontsource/roboto-mono": "^4.5.3",
