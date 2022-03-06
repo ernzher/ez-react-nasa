@@ -69,7 +69,7 @@ const useLoadMore = (offset: number) => {
                 if (pokemons.length === data.count) setHasMore(false)
                 setLoading(false)
 
-            }, pokemons.length ? 1000 : 10)
+            }, 1000)
         }        
         getPokemonData()                                       
     },[offset])
