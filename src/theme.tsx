@@ -1,5 +1,4 @@
 import {extendTheme } from "@chakra-ui/react";
-import { FaBlackTie } from "react-icons/fa";
 
 const theme = extendTheme({
     styles: {

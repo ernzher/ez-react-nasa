@@ -11,7 +11,6 @@ const TypeBadge: React.FC<Props> = ({type}) => {
             case 'grass': 
             case 'psychic': 
             case 'electric': 
-            case 'poison': 
             case 'fire': 
             case 'ice': 
             case 'flying': 
