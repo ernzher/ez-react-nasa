@@ -4,82 +4,42 @@ import {
 } from '@chakra-ui/react'
 import Banner from '../components/home/Banner'
 import PokeList from '../components/home/PokeList'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Url } from 'url'
-import { stringify } from 'querystring'
+import { useState, useCallback, useRef } from 'react'
+import useLoadMore from '../hooks/useLoadMore'
 
-export interface State {
-    nextPage: string,
-    pokemons: {
-        id: number,
-        name: string,
-        height: number, 
-        weight: number, 
-        img: string,
-        types: string[]
-    }[]
+interface State {
+    offset: number
 }
 
 const Home = () => {
-    const [nextPage, setNextPage] = useState<State["nextPage"]>("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
-    const [pokemons, setPokemons] = useState<State["pokemons"]>([])
+    const [offset, setOffset] = useState<State["offset"]>(0)
 
-    const fetchPokemons = async () => {
-        const { data } = await axios.get(nextPage);  
-        return data.results
-    }
+    const {
+        pokemons,
+        hasMore,
+        loading,
+        error
+    } = useLoadMore(offset)
 
-    const fetchPokemonData = async (url: string) => {
-        const { data } = await axios.get(url);   
-        return data
-    }
 
-    useEffect(() => {
-        const getPokemons = async () => {
-            const data = await fetchPokemons();
-            return data        
-        }
-        const getPokemonData = async() => {
-            let newBatch: State["pokemons"] = []
-            const results = await getPokemons();
-            // console.log(results);
-            
-            results.forEach(async (result: any) => {
-                const pokemonData = await fetchPokemonData(result.url);
-                let types: string[] = []
-                pokemonData.types.forEach((type: any) => {
-                    types.push(type.type.name)
-                })
-                newBatch.push({
-                    id: pokemonData.id,
-                    name: pokemonData.name,
-                    height: pokemonData.height,
-                    weight: pokemonData.weight,
-                    img: pokemonData.sprites.other.dream_world.front_default,
-                    types: types
-                })
-            })
-            
-            setTimeout(()=>{
-                console.log(newBatch);
-                newBatch.sort(function(a, b) { 
-                    return a.id - b.id;
-                });
-                setPokemons([
-                    ...pokemons,
-                    ...newBatch
-                ])
-            }, 10)
-           
-        }        
-        getPokemonData()                                       
-    },[])
+    const observer = useRef<any>()
+    const lastPokemonElementRef = useCallback(node => {
+        if (loading) return;
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore){ 
+                setOffset(offset => offset + 20)
+            }
+        })
+        if (node) observer.current.observe(node)
+    }, [loading, hasMore])
+
+    
 
     return (
        <Box position="relative">
-           <Banner />
-           <PokeList pokemons={pokemons}/>
+            <Banner />
+            <PokeList pokemons={pokemons} loading={loading} lastPokemonElementRef={lastPokemonElementRef} />
         </Box>
     )
 }

@@ -1,4 +1,4 @@
-import {extendTheme } from "@chakra-ui/react";
+import {AbsoluteCenter, extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
     styles: {
@@ -8,6 +8,7 @@ const theme = extendTheme({
             }
         }
     },
+    
     colors: {
         brand: {
             100: "#29DEB7",
@@ -48,6 +49,16 @@ const theme = extendTheme({
                     boxShadow: "none"
                 }
             },
+            variants: {
+                popout: {
+                    fontWeight:"normal",
+                    transition: "all 0.6s",
+                    _hover: {
+                        filter: "brightness(1.05)",
+                        transform: "scale(1.1)"
+                    },
+                }
+            }
     
         },
         Button:{
