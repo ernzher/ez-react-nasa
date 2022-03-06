@@ -21,7 +21,6 @@ const Home = () => {
         error
     } = useLoadMore(offset)
 
-
     const observer = useRef<any>()
     const lastPokemonElementRef = useCallback(node => {
         if (loading) return;
@@ -34,11 +33,15 @@ const Home = () => {
         if (node) observer.current.observe(node)
     }, [loading, hasMore])
 
-    
+
+    const scrollToSearch = ():void => {
+        document.getElementById("searchRef")?.scrollIntoView({behavior: "smooth"})
+
+    }
 
     return (
        <Box position="relative">
-            <Banner />
+            <Banner scrollToSearch={scrollToSearch}/>
             <PokeList pokemons={pokemons} loading={loading} lastPokemonElementRef={lastPokemonElementRef} />
         </Box>
     )

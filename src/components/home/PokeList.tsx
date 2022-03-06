@@ -24,10 +24,13 @@ interface Props{
 
 const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef}) => {
     return (
-        <Box mx={[3, 10, 15, 20]} py={10} alignItems={{ base: "center", md: "right"}}>
-            <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
-            <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='400' letterSpacing={2}>Welcome To The Pokédex</Text>          
-            <CustomDivider />
+        <Box mx={[3, 10, 15, 20]} py={10} textAlign={{ base: "center", md: "left"}} position="relative">
+            <div id="searchRef" style={{ position: "absolute" , top: "-50px" }}></div>
+            <Box mx={5}>
+                <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
+                <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='400' letterSpacing={2}>Welcome To The Pokédex</Text>          
+            </Box>
+             <CustomDivider />
             <SimpleGrid columns={[2, 2, 3, 4, 5, 6]} alignItems="center" spacing={2}>
                 {
                     pokemons.map((pokemon, index: number) => {
