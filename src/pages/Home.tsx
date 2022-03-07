@@ -6,6 +6,7 @@ import Banner from '../components/home/Banner'
 import PokeList from '../components/home/PokeList'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import useLoadMoreOrSearch from '../hooks/useLoadMoreOrSearch'
+import ScrollToButton from '../components/common/ScrollToButton'
 
 interface State {
     offset: number,
@@ -48,6 +49,7 @@ const Home = () => {
        <Box position="relative">
             <Banner scrollToSearch={scrollToSearch}/>
             <PokeList pokemons={pokemons} loading={loading} lastPokemonElementRef={lastPokemonElementRef} searchPokemon={searchPokemon} />
+            <ScrollToButton scrollToFunction={scrollToSearch}/>
         </Box>
     )
 }
