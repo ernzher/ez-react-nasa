@@ -3,12 +3,12 @@ import {
     HStack,
     Image,
     Text,
-    Link
 } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
 const Logo = () => {
     return (
-        <Link href='/'>
+        <Link to='/'>
             <HStack spacing={3}>
                 <Image
                     boxSize='32px'

@@ -36,7 +36,7 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
             <SimpleGrid columns={{base: 1, md: 2}} mx={5} spacing={5} pb={5}>
                 <Box textAlign={{ base: "center", md: "left"}} cursor="pointer" onClick={() => { searchPokemon(""); clearData(); }} >
                     <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
-                    <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='400' letterSpacing={2}>Welcome To The Pokédex</Text>          
+                    <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='1000' letterSpacing={2}>Welcome To The Pokédex</Text>          
                 </Box>
                 <SearchBar searchPokemon={searchPokemon} clearData={clearData} isSearching={loading} />
             </SimpleGrid>
@@ -49,17 +49,13 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
                                 if (pokemon.img) {
                                     if (pokemons.length === index+1) {
                                         return (
-                                            <Link variant="popout" key={index}>  
-                                                <div ref={lastPokemonElementRef} >
-                                                    <PokeCard pokemon={pokemon} />
-                                                </div>
-                                            </Link>
+                                            <div key={index} ref={lastPokemonElementRef} >
+                                                <PokeCard pokemon={pokemon} />
+                                            </div>
                                         )
                                     }
                                     return (
-                                        <Link variant="popout" key={index} >  
-                                            <PokeCard pokemon={pokemon} />
-                                        </Link>
+                                        <PokeCard pokemon={pokemon} key={index}/>
                                     )
                                 }
                             })

@@ -5,7 +5,7 @@ import {
 import Banner from '../components/home/Banner'
 import PokeList from '../components/home/PokeList'
 import { useState, useEffect, useCallback, useRef } from 'react'
-import useLoadMoreOrSearch from '../hooks/useLoadMoreOrSearch'
+import usePokemons from '../hooks/usePokemons'
 import ScrollToButton from '../components/common/ScrollToButton'
 
 interface State {
@@ -23,7 +23,7 @@ const Home = () => {
         loading,
         query,
         searchPokemon
-    } = useLoadMoreOrSearch(offset, pageNumber)
+    } = usePokemons(offset, pageNumber)
 
     const observer = useRef<any>()
     const lastPokemonElementRef = useCallback(node => {
