@@ -38,7 +38,7 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
                 <SearchBar searchPokemon={searchPokemon} isSearching={loading} />
             </SimpleGrid>
              <CustomDivider />
-            <SimpleGrid columns={[2, 2, 3, 4, 5, 6]} alignItems="center" spacing={2}>
+            <SimpleGrid columns={[2, 2, 3, 4, 5, 6]} alignItems="center" spacing={2} pt={5}>
                 {
                     pokemons.map((pokemon, index: number) => {
                         if (pokemon.img) {

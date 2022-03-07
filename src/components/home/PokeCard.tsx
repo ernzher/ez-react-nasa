@@ -24,7 +24,7 @@ interface Props{
 
 const PokeCard: React.FC<Props> = ({pokemon}) => {
     const card_color = useColorModeValue("gray.100", "gray.700")
-    const box_shadow = useColorModeValue("2xl", "0 10px 15px -3px rgba(255, 255, 255, 0.1),0 4px 6px -2px rgba(255, 255, 255, 0.05)")
+    const box_shadow = useColorModeValue("2xl", "")
     return (
         <Box 
             bg={card_color} 
