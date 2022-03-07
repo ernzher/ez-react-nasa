@@ -5,7 +5,9 @@ import {
     Spinner,
     Flex,
     Text,
-    Link
+    Link,
+    Image,
+    VStack
 } from '@chakra-ui/react'
 import PokeCard from './PokeCard'
 import CustomDivider from '../common/CustomDivider'
@@ -38,35 +40,51 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
                 </Box>
                 <SearchBar searchPokemon={searchPokemon} clearData={clearData} isSearching={loading} />
             </SimpleGrid>
-             <CustomDivider />
-            <SimpleGrid columns={[2, 2, 3, 4, 5, 6]} alignItems="center" spacing={2} pt={5}>
-                {
-                    pokemons.map((pokemon, index: number) => {
-                        if (pokemon.img) {
-                            if (pokemons.length === index+1) {
-                                return (
-                                    <Link variant="popout" key={index}>  
-                                        <div ref={lastPokemonElementRef} >
+            <CustomDivider />
+            {   
+                pokemons.length ? (
+                    <SimpleGrid columns={[2, 2, 3, 4, 5, 6]} alignItems="center" spacing={2} pt={5}>
+                        {
+                            pokemons.map((pokemon, index: number) => {
+                                if (pokemon.img) {
+                                    if (pokemons.length === index+1) {
+                                        return (
+                                            <Link variant="popout" key={index}>  
+                                                <div ref={lastPokemonElementRef} >
+                                                    <PokeCard pokemon={pokemon} />
+                                                </div>
+                                            </Link>
+                                        )
+                                    }
+                                    return (
+                                        <Link variant="popout" key={index} >  
                                             <PokeCard pokemon={pokemon} />
-                                        </div>
-                                    </Link>
-                                )
-                            }
-                            return (
-                                <Link variant="popout" key={index} >  
-                                    <PokeCard pokemon={pokemon} />
-                                </Link>
-                            )
+                                        </Link>
+                                    )
+                                }
+                            })
                         }
-                    })
-                }
-            </SimpleGrid>
-            {
-                loading && 
-                <Flex justifyContent='center' alignItems='center' mt={10} >
-                    <Spinner size='lg' />
-                </Flex>                
+                    </SimpleGrid>
+                ) : (
+                    !loading && (   
+                        <VStack py={5}>
+                            <Flex justifyContent='center' >
+                                <Image src="assets/images/sad_pikachu.png" width={{ base: 100, md: 150 }}/>
+                            </Flex>
+                            <Text fontSize={{ base: "md", md: "lg" }}>No pokémons found!</Text>
+                        </VStack>
+                    )
+                )
             }
+            {
+                loading && (
+                    <Flex justifyContent='center' alignItems='center' mt={10} >
+                        <Spinner size='lg' />
+                    </Flex> 
+                )
+            }
+            
+            
         </Box>
     )
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { LOADIPHLPAPI } from 'dns'
 
 export interface State {
     // offset: string,
@@ -27,18 +28,32 @@ const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
     const [query, setQuery] = useState<State["query"]>("")
 
     const fetchPokemons = async () => {
-        const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);  
-        return data
+        try {
+            const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);  
+            return data
+        } catch (error) {
+            return null
+        }
     }
 
     const fetchPokemonsFromQuery = async (query: string) => {
-        const { data } = await axios.get(`/pokemons/search?name=${query}&page=${pageNumber}&pageSize=20`);  
-        return data
+        try {
+            const { data } = await axios.get(`/pokemons/search?name=${query}&page=${pageNumber}&pageSize=20`);  
+            return data
+        } catch (error) {
+            return null
+        }
+        
     }
 
     const fetchPokemonData = async (url: string) => {
-        const { data } = await axios.get(url);   
-        return data
+        try {
+            const { data } = await axios.get(url);   
+            return data
+        } catch (error) {            
+            return null
+        }
+        
     }
 
     const getTypesFromPokemon = (pokemonData: any) => {
@@ -52,9 +67,11 @@ const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
     const getPokemonList = async (query ?: string) => {
         let list: State["pokemons"] = []
         if (!query) {
-            const data = await fetchPokemons();            
+            const data = await fetchPokemons();   
+            data &&     
             data.results.forEach(async (result: any) => {
-                const pokemonData = await fetchPokemonData(result.url);                
+                const pokemonData = await fetchPokemonData(result.url);     
+                pokemonData && 
                 list.push({
                     id: pokemonData.id,
                     name: pokemonData.name,
@@ -65,9 +82,11 @@ const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
                 })
             })
         } else {
-            const dataFromQuery = await fetchPokemonsFromQuery(query);            
+            const dataFromQuery = await fetchPokemonsFromQuery(query);     
+            dataFromQuery &&
             dataFromQuery.pokemons.forEach(async (pokemon: any) => {
                 const pokemonDataFromQuery = await fetchPokemonData(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`);
+                pokemonDataFromQuery &&
                 list.push({
                     id: pokemonDataFromQuery.id,
                     name: pokemonDataFromQuery.name,
@@ -109,19 +128,22 @@ const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
             
             //if integer is passed as the query, search as pokemon id
             if (Number.isInteger(parseInt(query))) {
-                const pokemonData = await fetchPokemonData(`https://pokeapi.co/api/v2/pokemon/${parseInt(query)}`)        
-                setPokemons([
-                    {
-                        id: pokemonData.id,
-                        name: pokemonData.name,
-                        height: pokemonData.height,
-                        weight: pokemonData.weight,
-                        img: pokemonData.sprites.other.dream_world.front_default,
-                        types: getTypesFromPokemon(pokemonData)
-                    }
-                ])
-                setHasMore(false)
-                setLoading(false)
+                const pokemonData = await fetchPokemonData(`https://pokeapi.co/api/v2/pokemon/${parseInt(query)}`) 
+                setTimeout(() => {
+                    pokemonData &&
+                    setPokemons([
+                        {
+                            id: pokemonData.id,
+                            name: pokemonData.name,
+                            height: pokemonData.height,
+                            weight: pokemonData.weight,
+                            img: pokemonData.sprites.other.dream_world.front_default,
+                            types: getTypesFromPokemon(pokemonData)
+                        }
+                    ])
+                    setHasMore(false)
+                    setLoading(false)
+                }, 1000)      
                 return;
             } 
             //else search as pokemon name

@@ -54,7 +54,7 @@ const SearchBar: React.FC<Props> = ({ searchPokemon, isSearching, clearData }) =
 								/>
 							} 
 							<Button  
-								onClick={() => { !query && clearData(); searchPokemon(query) } } 
+								onClick={() => { clearData(); searchPokemon(query) } } 
 								borderStartRadius={0} 
 								borderEndRadius={5} 
 								w="100%" 
