@@ -2,6 +2,7 @@
   "name": "Pokedex",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://poki-dex.herokuapp.com",
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.6",

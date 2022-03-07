@@ -12,6 +12,7 @@ const theme = extendTheme({
     colors: {
         brand: {
             100: "#29DEB7",
+            200: "#24adf3"
         },
         type: {
             grass: "#A8E769",

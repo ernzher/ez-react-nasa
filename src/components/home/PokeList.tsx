@@ -4,10 +4,13 @@ import {
     SimpleGrid,
     Spinner,
     Flex,
-    Text
+    Text,
+    Link
 } from '@chakra-ui/react'
 import PokeCard from './PokeCard'
 import CustomDivider from '../common/CustomDivider'
+import SearchBar from './SearchBar'
+// import Link from 'react-router-dom'
 
 interface Props{
     pokemons: {
@@ -19,31 +22,41 @@ interface Props{
         types: string[]
     }[],
     loading: boolean,
-    lastPokemonElementRef: (node: any) => void
+    lastPokemonElementRef: (node: any) => void,
+    searchPokemon: (query: string) => void
 }
 
-const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef}) => {
+const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, searchPokemon}) => {
     return (
-        <Box mx={[3, 10, 15, 20]} py={10} textAlign={{ base: "center", md: "left"}} position="relative">
+        <Box mx={[3, 10, 15, 20]} py={10} position="relative">
             <div id="searchRef" style={{ position: "absolute" , top: "-50px" }}></div>
-            <Box mx={5}>
-                <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
-                <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='400' letterSpacing={2}>Welcome To The Pokédex</Text>          
-            </Box>
+            <SimpleGrid columns={{base: 1, md: 2}} mx={5} spacing={5} pb={5}>
+                <Box textAlign={{ base: "center", md: "left"}}>
+                    <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
+                    <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='400' letterSpacing={2}>Welcome To The Pokédex</Text>          
+                </Box>
+                <SearchBar searchPokemon={searchPokemon}/>
+            </SimpleGrid>
              <CustomDivider />
             <SimpleGrid columns={[2, 2, 3, 4, 5, 6]} alignItems="center" spacing={2}>
                 {
                     pokemons.map((pokemon, index: number) => {
-                        if (pokemons.length === index+1) {
+                        if (pokemon.img) {
+                            if (pokemons.length === index+1) {
+                                return (
+                                    <Link variant="popout" key={index}>  
+                                        <div ref={lastPokemonElementRef} >
+                                            <PokeCard pokemon={pokemon} />
+                                        </div>
+                                    </Link>
+                                )
+                            }
                             return (
-                                <div ref={lastPokemonElementRef} key={index}>
+                                <Link variant="popout" key={index} >  
                                     <PokeCard pokemon={pokemon} />
-                                </div>
+                                </Link>
                             )
                         }
-                        return (
-                            <PokeCard key={index} pokemon={pokemon} />
-                        )
                     })
                 }
             </SimpleGrid>
