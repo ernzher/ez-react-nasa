@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants'
 
 export interface State {
     // offset: string,
     loading: boolean,
-    error: boolean,
+    // error: boolean,
     pokemons: {
         id: number,
         name: string,
@@ -22,7 +21,7 @@ export interface State {
 const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
 
     const [loading, setLoading] = useState<State["loading"]>(false)
-    const [error, setError] = useState<State["error"]>(false)
+    // const [error, setError] = useState<State["error"]>(false)
     const [pokemons, setPokemons] = useState<State["pokemons"]>([])
     const [hasMore, setHasMore] = useState<State["hasMore"]>(true)
     const [query, setQuery] = useState<State["query"]>("")
@@ -85,7 +84,7 @@ const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
     useEffect(() => {
         setHasMore(true)
         setLoading(true);
-        setError(false);        
+        // setError(false);        
         const loadMorePokemon = async() => {
             const pokemonList = await (query ? getPokemonList(query) : getPokemonList())
             setTimeout(()=>{
@@ -104,7 +103,7 @@ const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
         setPokemons([])
         setHasMore(true)
         setLoading(true);
-        setError(false);        
+        // setError(false);        
 
         const loadPokemonFromQuery = async() => {
             
@@ -137,7 +136,7 @@ const useLoadMoreOrSearch = (offset: number, pageNumber: number) => {
         loadPokemonFromQuery();
     }   
      
-    return {loading, error, pokemons, hasMore, query, searchPokemon}
+    return {loading, pokemons, hasMore, query, searchPokemon}
 }
 
 export default useLoadMoreOrSearch

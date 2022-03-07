@@ -21,7 +21,6 @@ const Home = () => {
         pokemons,
         hasMore,
         loading,
-        error,
         query,
         searchPokemon
     } = useLoadMoreOrSearch(offset, pageNumber)
