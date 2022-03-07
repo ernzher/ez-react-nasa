@@ -35,7 +35,7 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
                     <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
                     <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='400' letterSpacing={2}>Welcome To The Pokédex</Text>          
                 </Box>
-                <SearchBar searchPokemon={searchPokemon}/>
+                <SearchBar searchPokemon={searchPokemon} isSearching={loading} />
             </SimpleGrid>
              <CustomDivider />
             <SimpleGrid columns={[2, 2, 3, 4, 5, 6]} alignItems="center" spacing={2}>

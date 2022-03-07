@@ -11,14 +11,15 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
 
 interface Props {
-	searchPokemon: (query: string) => void
+	searchPokemon: (query: string) => void,
+	isSearching: boolean
 }
 
 interface State {
 	query: string
 }
 
-const SearchBar: React.FC<Props> = ({ searchPokemon }) => {
+const SearchBar: React.FC<Props> = ({ searchPokemon, isSearching }) => {
 	 
 	const [query, setQuery] = useState<State["query"]>('')
 
@@ -31,7 +32,7 @@ const SearchBar: React.FC<Props> = ({ searchPokemon }) => {
 					pointerEvents='none'
 					children={<SearchIcon color='gray.500' />}
 				/>
-				<Input type='text' value={query} onChange={handleChange} focusBorderColor="brand.200" placeholder='Type anything about your pokémon here!' />
+				<Input type='text' value={query} onChange={handleChange} focusBorderColor="brand.200" placeholder='Enter a pokémon ID or name here!' />
 				<InputRightAddon
 					p={0}
 					children={
@@ -40,6 +41,8 @@ const SearchBar: React.FC<Props> = ({ searchPokemon }) => {
 							borderStartRadius={0} 
 							borderEndRadius={5} 
 							w="100%" 
+							isLoading={isSearching}
+   							loadingText='Searching'
 							variant="snd_gradient">
 							Search
 						</Button>
