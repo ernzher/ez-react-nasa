@@ -38,16 +38,19 @@ const Home = () => {
     }, [loading, hasMore])
 
     useEffect(() => {
-        setOffset(0);
-        setPageNumber(1)
+        clearData()
     }, [query])
 
+    const clearData = (): void => {
+        setOffset(0);
+        setPageNumber(1)
+    }
     const scrollToSearch = ():void => document.getElementById("searchRef")?.scrollIntoView({behavior: "smooth"})
 
     return (
        <Box position="relative">
             <Banner scrollToSearch={scrollToSearch}/>
-            <PokeList pokemons={pokemons} loading={loading} lastPokemonElementRef={lastPokemonElementRef} searchPokemon={searchPokemon} />
+            <PokeList pokemons={pokemons} loading={loading} lastPokemonElementRef={lastPokemonElementRef} searchPokemon={searchPokemon} clearData={clearData} />
             <ScrollToButton scrollToFunction={scrollToSearch}/>
         </Box>
     )

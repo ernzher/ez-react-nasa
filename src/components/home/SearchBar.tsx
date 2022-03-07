@@ -13,14 +13,15 @@ import { useState } from 'react'
 
 interface Props {
 	searchPokemon: (query: string) => void,
-	isSearching: boolean
+	isSearching: boolean,
+	clearData: () => void
 }
 
 interface State {
 	query: string
 }
 
-const SearchBar: React.FC<Props> = ({ searchPokemon, isSearching }) => {
+const SearchBar: React.FC<Props> = ({ searchPokemon, isSearching, clearData }) => {
 	 
 	const [query, setQuery] = useState<State["query"]>('')
 
@@ -53,7 +54,7 @@ const SearchBar: React.FC<Props> = ({ searchPokemon, isSearching }) => {
 								/>
 							} 
 							<Button  
-								onClick={() => searchPokemon(query)} 
+								onClick={() => { !query && clearData(); searchPokemon(query) } } 
 								borderStartRadius={0} 
 								borderEndRadius={5} 
 								w="100%" 
