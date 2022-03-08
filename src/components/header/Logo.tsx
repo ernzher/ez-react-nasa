@@ -11,10 +11,8 @@ const Logo = () => {
         <Link to='/'>
             <HStack spacing={3}>
                 <Image
-                    boxSize='32px'
-                    objectFit='cover'
-                    src='assets/images/logo.png'
-                    alt='Logo'
+                    width={8}
+                    src="/assets/icons/logo.png"
                 />
                 <Text fontFamily='Roboto Mono' fontWeight='light' fontSize='2xl'>POKÉDEX</Text>
             </HStack>

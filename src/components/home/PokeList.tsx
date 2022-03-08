@@ -5,7 +5,6 @@ import {
     Spinner,
     Flex,
     Text,
-    Link,
     Image,
     VStack
 } from '@chakra-ui/react'

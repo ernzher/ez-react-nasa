@@ -84,6 +84,10 @@ const theme = extendTheme({
                     bgGradient: "linear(to-r, #6c90ff, #7ef2f6)",
                     color: "black",
                     borderRadius: 30,
+                },
+                focusedCategory: {
+                    fontWeight: "bold",
+                    borderBottom: "2px white solid",
                 }
             }
         }
