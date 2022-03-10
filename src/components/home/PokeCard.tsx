@@ -17,18 +17,29 @@ interface Props
     pokemon: {
         id: number,
         name: string,
-        height: number, 
-        weight: number, 
+        height: {
+            m: number,
+            foot: string
+        }, 
+        weight: {
+            kg: number,
+            lbs: number
+        }, 
         img: string,
-        types: string[]
-    }
+        types: string[],
+        abilities: string[],
+        stats: {
+            stat_name: string,
+            base_stat: number
+        }[]
+    },
 }
 
 const PokeCard: React.FC<Props> = ({pokemon}) => {
     const card_color = useColorModeValue("gray.100", "gray.700")
     const box_shadow = useColorModeValue("2xl", "")
     return (
-        <Link variant="popout" as={ReactRouterLink} to={`/pokemon/${pokemon.name}`}>
+        <Link variant="popout" as={ReactRouterLink} to={`/pokemon/${pokemon.name.toLowerCase()}`}>
             <Box 
                 bg={card_color} 
                 minW={[130, 150, 200]} 
@@ -46,7 +57,7 @@ const PokeCard: React.FC<Props> = ({pokemon}) => {
                 </Flex>
                 <VStack spacing={3}>
                     <Text fontSize={['xs', 'sm', 'md']} color='gray.500'># {pokemon.id.toLocaleString('en-US', {minimumIntegerDigits: 3})}</Text>
-                    <Text fontSize={['md', 'lg','xl']} mt={0}>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</Text>
+                    <Text fontSize={['md', 'lg','xl']} mt={0}>{pokemon.name}</Text>
                     <HStack py={2} spacing={1}>
                         {
                             pokemon.types.map((type, index) => {

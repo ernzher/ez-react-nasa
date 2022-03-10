@@ -19,34 +19,27 @@ import About from '../components/details/About';
 import Stats from '../components/details/Stats';
 import Moves from '../components/details/Moves';
 import TypeBadge from '../components/common/TypeBadge';
-
-interface Pokemon {
-    id: number,
-    name: string,
-    height: number, 
-    weight: number, 
-    img: string,
-    types: string[]
-}
+import { Pokemon } from '../hooks/usePokemons';
 
 const PokemonDetail = () => {
     const { name } = useParams();
     const [pokemon, setPokemon] = useState<Pokemon>();
     const [activeCategory, setActiveCategory] = useState("about") 
-    const { getPokemonData } = usePokemons();
+    const { getPokemonDetailData } = usePokemons();
 
+    
     useEffect(() => {
         const getPokemon = async () => {
-            const data = await getPokemonData(name);
-            data && setPokemon(data)
+            const data = await getPokemonDetailData(name);            
+            setPokemon(data)                    
         }
         getPokemon();
     }, [])  
 
-    const renderCategory = (category: string ) => {
+    const renderCategory = (pokemon: Pokemon ,category: string ) => {
         switch(category) {
             case 'about':
-                return <About />;
+                return <About pokemon={ pokemon } />;
             case 'stats':
                 return <Stats />;
             case 'moves':
@@ -60,7 +53,7 @@ const PokemonDetail = () => {
                     <Box bgGradient={`linear(to-b, transparent, type.${pokemon.types[0]}, transparent )`} position="relative">
                         <Flex fontFamily="Roboto Mono" p={{ base:5 , md: 10 }} justifyContent='space-between' alignItems='center'>
                             <VStack align='left'>
-                                <Text fontSize={{ base:"2xl", md: "4xl" }} fontWeight={1000} >Bulbasaur</Text>
+                                <Text fontSize={{ base:"2xl", md: "4xl" }} fontWeight={1000} >{pokemon.name}</Text>
                                 <HStack spacing={3}>
                                     {
                                         pokemon.types.map((type, index) => (
@@ -69,7 +62,7 @@ const PokemonDetail = () => {
                                     }
                                 </HStack>
                             </VStack>
-                            <Text>#001</Text>
+                            <Text># {pokemon.id.toLocaleString('en-US', {minimumIntegerDigits: 3})}</Text>
                         </Flex>
                         <Box 
                             left="50%"
@@ -111,7 +104,7 @@ const PokemonDetail = () => {
                                 </Button>
                               </Flex>
                             <Box p={{ base:5 , md: 10 }}>
-                                { renderCategory(activeCategory) }
+                                { renderCategory(pokemon, activeCategory) }
                             </Box>
                         </Box>                        
                     <VStack>

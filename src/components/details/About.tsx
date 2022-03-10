@@ -23,10 +23,16 @@ import {
     TableCaption,
 } from '@chakra-ui/react'
 import { TimeIcon, UpDownIcon } from '@chakra-ui/icons'
-const About = () => {
+import { Pokemon } from '../../hooks/usePokemons';
+
+interface Props {
+    pokemon: Pokemon
+}
+
+const About: React.FC<Props> = ({ pokemon }) => {
     return (
         <VStack spacing={10}>
-            <Text >A strange seed was planted on its back at birth. The plant sprouts and grows</Text>
+            <Text >{ pokemon.description }</Text>
             <Flex 
                 borderRadius={20} 
                 justifyContent='space-evenly' 
@@ -39,7 +45,7 @@ const About = () => {
                 <VStack>
                     <HStack>
                         <TimeIcon />
-                        <Text>6.9 kg (15.2 lbs)</Text>
+                        <Text>{ pokemon.weight.kg } kg ({pokemon.weight.lbs} lbs)</Text>
                     </HStack>
                     <Text>Weight</Text>
                 </VStack>
@@ -47,7 +53,7 @@ const About = () => {
                 <VStack>
                     <HStack>
                         <UpDownIcon />
-                        <Text>0.7m (2' 04'')</Text>
+                        <Text>{ pokemon.height.m } m ({pokemon.height.foot})</Text>
                     </HStack>
                     <Text>Height</Text>
                 </VStack>
@@ -56,23 +62,23 @@ const About = () => {
                 <Tbody>
                     <Tr>
                         <Td color="whiteAlpha.700">Species</Td>
-                        <Td w="70%">Seed Pokemon</Td>
+                        <Td w="70%">{ pokemon.species_name }</Td>
                     </Tr>
                     <Tr>
                         <Td color="whiteAlpha.700">Abilities</Td>
-                        <Td w="70%">Overgrow, Chlorophyll</Td>
+                        <Td w="70%">{ pokemon.abilities.join(", ") }</Td>
                     </Tr>
                     <Tr>
                         <Td color="whiteAlpha.700">Egg Groups</Td>
-                        <Td w="70%">Monster, Plant</Td>
+                        <Td w="70%">{ pokemon.egg_groups.join(", ") }</Td>
                     </Tr>
                     <Tr>
                         <Td color="whiteAlpha.700" >Habitat</Td>
-                        <Td w="70%">Rainforests, Grass</Td>
+                        <Td w="70%">{ pokemon.habitat }</Td>
                     </Tr>
                     <Tr>
                         <Td color="whiteAlpha.700">Growth Rate</Td>
-                        <Td w="70%">Medium-slow</Td>
+                        <Td w="70%">{ pokemon.growth_rate }</Td>
                     </Tr>
                 </Tbody>
             </Table>

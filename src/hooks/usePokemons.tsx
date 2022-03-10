@@ -2,27 +2,85 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-export interface State {
+interface State {
     loading: boolean,
     pokemons: {
         id: number,
         name: string,
-        height: number, 
-        weight: number, 
+        height: {
+            m: number,
+            foot: string
+        }, 
+        weight: {
+            kg: number,
+            lbs: number
+        }, 
         img: string,
-        types: string[]
+        types: string[],
+        abilities: string[],
+        stats: {
+            stat_name: string,
+            base_stat: number
+        }[]
     }[],
+    pokemonSpecies: {
+        species_name: string,
+        egg_groups: string[],
+        habitat: string,
+        growth_rate: string,
+        description: string
+    }
     hasMore: boolean,
-    query: string
+    query: string,
+}
+
+export interface Pokemon {
+    id: number,
+    name: string,
+    height: {
+        m: number,
+        foot: string
+    }, 
+    weight: {
+        kg: number,
+        lbs: number
+    }, 
+    img: string,
+    types: string[],
+    abilities: string[],
+    stats: {
+        stat_name: string,
+        base_stat: number
+    }[]
+    species_name: string,
+    egg_groups: string[],
+    habitat: string,
+    growth_rate: string,
+    description: string
 }
 
 const usePokemons = (offset?: number, pageNumber?: number) => {
 
     const [loading, setLoading] = useState<State["loading"]>(false)
-    // const [error, setError] = useState<State["error"]>(false)
     const [pokemons, setPokemons] = useState<State["pokemons"]>([])
     const [hasMore, setHasMore] = useState<State["hasMore"]>(true)
     const [query, setQuery] = useState<State["query"]>("")
+
+    const convertToPounds = (kg: number): number => Math.round(kg * 2.205)
+
+    const convertToFoot = ( meters: number ) : string => {
+        let foot = meters * 3.28084
+        let footStr = Math.ceil(foot * 10).toString()       
+        switch(footStr.length) {
+            case 2: return `${footStr.charAt(0)} ' ${footStr.charAt(1)}''`; 
+            case 3: return `${footStr.substring(0,2)} ' ${footStr.charAt(2)}''`; 
+            default: return `${footStr.substring(0,3)} ' ${footStr.charAt(3)}''`; 
+        }
+    }
+
+    const toCapitalCase = ( text: string ): string => text.charAt(0).toUpperCase() + (text.length > 1 && text.slice(1))
+
+    const processString = (text: string): string => text.replace(/\f|\n/g,' ')
 
     const fetchPokemons = async () => {
         try {
@@ -42,28 +100,42 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         }
     }
 
-    const getTypesFromPokemonData = (pokemonData: any) => {
-        let types: string[] = []
-        pokemonData.types.forEach((type: any) => {
-            types.push(type.type.name)
-        })
-        return types
+    const getPokemonData = async(idOrName: any) => {
+        const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);   
+        return {
+            id: data.id,
+            name: toCapitalCase(data.name),
+            height: {
+                m: data.height/10,
+                foot: convertToFoot(data.height/10)
+            } ,
+            weight: {
+                kg: data.weight/10,
+                lbs: convertToPounds(data.weight/10)
+            },
+            img: data.sprites.other.dream_world.front_default,
+            types: data.types.map((type: any) => type.type.name),
+            abilities: data.abilities.map((ability: any) => toCapitalCase(ability.ability.name)),
+            stats: data.stats.map((stat: any) => {
+                return {
+                    stat_name: stat.stat.name, 
+                    base_stat: stat.base_stat
+                } 
+            })
+        } 
     }
 
-    const getPokemonData = async(idOrName: any) => {
-        try {
-            const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);   
-            return {
-                id: data.id,
-                name: data.name,
-                height: data.height,
-                weight: data.weight,
-                img: data.sprites.other.dream_world.front_default,
-                types: getTypesFromPokemonData(data)
-            }
-        } catch (error) {            
-            return null
-        }
+    const getPokemonDetailData = async (idOrName: any) => {
+        const pokemonData = await getPokemonData(idOrName);
+        const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${idOrName}`);   
+        return {
+            ...pokemonData,
+            species_name: data.genera.find((genus: any) => genus.language.name === "en").genus,
+            egg_groups: data.egg_groups.map((egg_group: any) => toCapitalCase(egg_group.name)),
+            habitat: toCapitalCase(data.habitat.name),
+            growth_rate: toCapitalCase(data.growth_rate.name),
+            description: processString(data.flavor_text_entries.find((flavor_text_entry: any) => flavor_text_entry.language.name === "en").flavor_text)
+        }  
     }
 
     const getPokemonList = async (query ?: string) => {
@@ -132,7 +204,7 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         
     },[offset, pageNumber])
 
-    return {loading, pokemons, hasMore, query, searchPokemon, getPokemonData}
+    return {loading, pokemons, hasMore, query, searchPokemon, getPokemonData, getPokemonDetailData}
 }
 
 export default usePokemons

@@ -11,16 +11,25 @@ import {
 import PokeCard from './PokeCard'
 import CustomDivider from '../common/CustomDivider'
 import SearchBar from './SearchBar'
-// import Link from 'react-router-dom'
-
 interface Props{
     pokemons: {
         id: number,
         name: string,
-        height: number, 
-        weight: number, 
+        height: {
+            m: number,
+            foot: string
+        }, 
+        weight: {
+            kg: number,
+            lbs: number
+        }, 
         img: string,
-        types: string[]
+        types: string[],
+        abilities: string[],
+        stats: {
+            stat_name: string,
+            base_stat: number
+        }[]
     }[],
     loading: boolean,
     lastPokemonElementRef: (node: any) => void,
