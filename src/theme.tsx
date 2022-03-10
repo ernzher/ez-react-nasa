@@ -85,10 +85,6 @@ const theme = extendTheme({
                     color: "black",
                     borderRadius: 30,
                 },
-                focusedCategory: {
-                    fontWeight: "bold",
-                    borderBottom: "2px white solid",
-                }
             }
         }
     },
