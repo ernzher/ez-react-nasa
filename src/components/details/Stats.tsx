@@ -21,66 +21,90 @@ import {
     Th,
     Td,
     TableCaption,
+    useColorModeValue
 } from '@chakra-ui/react'
 import LevelBar from '../common/LevelBar'
+import { Pokemon } from '../../hooks/usePokemons';
+import TypeBadge from '../common/TypeBadge';
+interface Props {
+    pokemon: Pokemon
+}
 
-const Stats = () => {
+const Stats: React.FC<Props> = ({ pokemon }) => {
+    const statLabelColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600')
+    
     return (
-        <Box>
-            <Table variant='unstyled' >
-                <Tbody>
+        <VStack fontWeight={{ base: "normal", md: "bold" }} fontSize={['xs', 'sm', 'md', 'lg']} >
+            <Table variant='unstyled'  w={['100%', '90%', '80%', '70%']} >
+                <Tbody >
                     <Tr>
-                        <Td color="whiteAlpha.700" colSpan={1}>HP</Td>
-                        <Td width="20%">45</Td>
-                        <Td width="100%">
-                            <LevelBar minVal={50} />
+                        <Td color={statLabelColor} px={2} w="20%">HP</Td>
+                        <Td w="20%" px={2}>{ pokemon.stats.find(stat => stat.stat_name === 'hp')?.base_stat }</Td>
+                        <Td px={2}>
+                            <LevelBar minVal={ pokemon.stats.find(stat => stat.stat_name === 'hp')?.base_stat } stat="hp"/>
                         </Td>
                     </Tr>
                     <Tr>
-                        <Td color="whiteAlpha.700">Attack</Td>
-                        <Td>49</Td>
-                        <Td width="100%">
-                            <LevelBar minVal={50} />
+                        <Td color={statLabelColor} px={2}>Attack</Td>
+                        <Td px={2}>{ pokemon.stats.find(stat => stat.stat_name === 'attack')?.base_stat }</Td>
+                        <Td px={2}>
+                            <LevelBar minVal={pokemon.stats.find(stat => stat.stat_name === 'attack')?.base_stat} stat="attack"/>
                         </Td>
                     </Tr>
                     <Tr>
-                        <Td color="whiteAlpha.700">Defense</Td>
-                        <Td>49</Td>
-                        <Td width="100%">
-                            <LevelBar minVal={70} />
+                        <Td color={statLabelColor} px={2}>Defense</Td>
+                        <Td px={2}>{ pokemon.stats.find(stat => stat.stat_name === 'defense')?.base_stat }</Td>
+                        <Td px={2}>
+                            <LevelBar minVal={pokemon.stats.find(stat => stat.stat_name === 'defense')?.base_stat} stat="defense"/>
                         </Td>
                     </Tr>
                     <Tr>
-                        <Td color="whiteAlpha.700" >Sp. Atk</Td>
-                        <Td>65</Td>
-                        <Td width="100%">
-                            <LevelBar minVal={30} />
+                        <Td color={statLabelColor} px={2} >Sp. Atk</Td>
+                        <Td px={2}>{ pokemon.stats.find(stat => stat.stat_name === 'special-attack')?.base_stat }</Td>
+                        <Td px={2}> 
+                            <LevelBar minVal={pokemon.stats.find(stat => stat.stat_name === 'special-attack')?.base_stat} stat="special-attack"/>
                         </Td>
                     </Tr>
                     <Tr>
-                        <Td color="whiteAlpha.700">Sp. Def</Td>
-                        <Td>65</Td>
-                        <Td width="100%">
-                            <LevelBar minVal={90} />
+                        <Td color={statLabelColor} px={2}>Sp. Def</Td>
+                        <Td px={2}>{ pokemon.stats.find(stat => stat.stat_name === 'special-defense')?.base_stat }</Td>
+                        <Td px={2}>
+                            <LevelBar minVal={pokemon.stats.find(stat => stat.stat_name === 'special-defense')?.base_stat} stat="special-defense"/>
                         </Td>
                     </Tr>
                     <Tr>
-                        <Td color="whiteAlpha.700">Speed</Td>
-                        <Td>45</Td>
-                        <Td width="100%">
-                            <LevelBar minVal={100} />
+                        <Td color={statLabelColor} px={2}>Speed</Td>
+                        <Td px={2}>{ pokemon.stats.find(stat => stat.stat_name === 'speed')?.base_stat }</Td>
+                        <Td px={2}>
+                            <LevelBar minVal={pokemon.stats.find(stat => stat.stat_name === 'speed')?.base_stat} stat="speed"/>
                         </Td>
                     </Tr>
                 </Tbody>
             </Table>
-            <Box p={6}>
-                <Text fontSize='xl' fontFamily="Roboto Mono" fontWeight='bold'>Battle Condition</Text>
-                <Text>Weak to</Text>
-                <Flex>
-
+            <VStack py={5} alignItems='left' w={['100%', '90%', '80%', '70%']}>
+                <Text fontSize={{base: 'md', md:'xl'}} fontFamily="Roboto Mono" fontWeight='bold'>Battle Condition</Text>
+                <Flex direction={{base: 'column', xl: 'row'}} alignItems={{base: 'left', xl: 'center'}}>
+                    <Text fontSize={['xs','sm', 'md' ]} w="40%">Weak against: </Text>
+                    <SimpleGrid py={2} columns={[5, 6, 7]} spacingX={3} spacingY={1}>
+                        {
+                            pokemon.battle_condition.double_damage_from.map(type => (
+                                <TypeBadge type={type}/>
+                            ))
+                        }
+                    </SimpleGrid>
                 </Flex>
-            </Box>
-        </Box>
+                <Flex direction={{base: 'column', xl: 'row'}} alignItems={{base: 'left', xl: 'center'}}>
+                    <Text fontSize={['xs','sm', 'md' ]}  w="40%">Effective against: </Text>
+                    <SimpleGrid py={2} columns={[5, 6, 7]} spacingX={3} spacingY={1}>
+                        {
+                            pokemon.battle_condition.double_damage_to.map(type => (
+                                <TypeBadge type={type}/>
+                            ))
+                        }
+                    </SimpleGrid>
+                </Flex>
+            </VStack>
+        </VStack>
         
     )
 }

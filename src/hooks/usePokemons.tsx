@@ -21,7 +21,8 @@ interface State {
         stats: {
             stat_name: string,
             base_stat: number
-        }[]
+        }[],
+        moves: string[]
     }[],
     pokemonSpecies: {
         species_name: string,
@@ -51,12 +52,19 @@ export interface Pokemon {
     stats: {
         stat_name: string,
         base_stat: number
-    }[]
+    }[],
+    moves: string[],
     species_name: string,
     egg_groups: string[],
     habitat: string,
     growth_rate: string,
-    description: string
+    description: string,
+    battle_condition: BattleCondition
+}
+
+interface BattleCondition {
+    double_damage_from: string[]
+    double_damage_to: string[]
 }
 
 const usePokemons = (offset?: number, pageNumber?: number) => {
@@ -80,7 +88,7 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
 
     const toCapitalCase = ( text: string ): string => text.charAt(0).toUpperCase() + (text.length > 1 && text.slice(1))
 
-    const processString = (text: string): string => text.replace(/\f|\n/g,' ')
+    const processString = (text: string): string => text.replace(/\f|\n|-/g,' ')
 
     const fetchPokemons = async () => {
         try {
@@ -95,6 +103,31 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         try {
             const { data } = await axios.get(`/pokemons/search?name=${query}&page=${pageNumber}&pageSize=20`);  
             return data
+        } catch (error) {
+            return null
+        }
+    }
+
+    const fetchBattleConditionData = async (typeList: string[]) => {
+        
+        try {
+            
+            let result: any = {
+                double_damage_from: [],
+                double_damage_to: [],
+            }
+            for (const type of typeList){
+                const { data } = await axios.get(`https://pokeapi.co/api/v2/type/${type}`); 
+                result = {
+                    double_damage_from: [...result.double_damage_from, ...data.damage_relations.double_damage_from.map((type: any) => type.name)],
+                    double_damage_to: [...result.double_damage_to, ...data.damage_relations.double_damage_to.map((type: any) => type.name)],
+                } 
+            }            
+            Object.keys(result).forEach((key) => {
+                result[key] = [...new Set(result[key])];
+            })
+            return result
+
         } catch (error) {
             return null
         }
@@ -115,26 +148,29 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
             },
             img: data.sprites.other.dream_world.front_default,
             types: data.types.map((type: any) => type.type.name),
-            abilities: data.abilities.map((ability: any) => toCapitalCase(ability.ability.name)),
+            abilities: data.abilities.map((ability: any) => toCapitalCase(processString(ability.ability.name))),
             stats: data.stats.map((stat: any) => {
                 return {
                     stat_name: stat.stat.name, 
                     base_stat: stat.base_stat
                 } 
-            })
+            }),
+            moves: data.moves.map((move: any) => toCapitalCase(processString(move.move.name)))
         } 
     }
 
     const getPokemonDetailData = async (idOrName: any) => {
         const pokemonData = await getPokemonData(idOrName);
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${idOrName}`);   
+        const battleConditionData = await fetchBattleConditionData(pokemonData.types)
         return {
             ...pokemonData,
             species_name: data.genera.find((genus: any) => genus.language.name === "en").genus,
             egg_groups: data.egg_groups.map((egg_group: any) => toCapitalCase(egg_group.name)),
             habitat: toCapitalCase(data.habitat.name),
-            growth_rate: toCapitalCase(data.growth_rate.name),
-            description: processString(data.flavor_text_entries.find((flavor_text_entry: any) => flavor_text_entry.language.name === "en").flavor_text)
+            growth_rate: toCapitalCase(processString(data.growth_rate.name)),
+            description: processString(data.flavor_text_entries.find((flavor_text_entry: any) => flavor_text_entry.language.name === "en").flavor_text),
+            battle_condition: battleConditionData
         }  
     }
 
@@ -142,23 +178,23 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         let list: State["pokemons"] = []
         if (!query) {
             const data = await fetchPokemons();   
-            data &&     
-            data.results.forEach(async (result: any) => {
+            for (const result of data.results) {
                 const pokemonData = await getPokemonData(result.name);     
                 pokemonData && list.push(pokemonData)
-            })
+            }
         } else {
             const dataFromQuery = await fetchPokemonsFromQuery(query);     
-            dataFromQuery &&
-            dataFromQuery.pokemons.forEach(async (pokemon: any) => {
+            for (const pokemon of dataFromQuery.pokemons) {
                 const pokemonDataFromQuery = await getPokemonData(pokemon.id);
                 pokemonDataFromQuery && list.push(pokemonDataFromQuery)
-            })
+            }
         }
         return list
     }
     
     const searchPokemon = (query: string) => {
+        fetchBattleConditionData(["grass", "poison"])
+
         setQuery(query);
         setPokemons([])
         setHasMore(true)
@@ -169,21 +205,21 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
             //if integer is passed as the query, search as pokemon id
             if (Number.isInteger(parseInt(query))) {
                 const pokemonData = await getPokemonData(parseInt(query)) 
-                setTimeout(() => {
+                // setTimeout(() => {
                     pokemonData && setPokemons([pokemonData])
                     setHasMore(false)
                     setLoading(false)
-                }, 1000)      
+                // }, 1000)      
                 return;
             } 
             //else search as pokemon name
             const pokemonList = await getPokemonList(query)            
-            setTimeout(()=>{
+            // setTimeout(()=>{
                 pokemonList.sort((a, b) => a.id - b.id)
                 setPokemons(pokemonList)
                 if (pokemonList.length < 20) setHasMore(false)
                 setLoading(false)
-            }, 1000)
+            // }, 1000)
         }      
         loadPokemonFromQuery();
     }   
@@ -193,12 +229,12 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         setLoading(true);
         const loadMorePokemon = async() => {
             const pokemonList = await (query ? getPokemonList(query) : getPokemonList())
-            setTimeout(()=>{
+            // setTimeout(()=>{
                 pokemonList.sort((a, b) => a.id - b.id)
                 setPokemons([...pokemons,...pokemonList])
                 if (pokemonList.length < 20) setHasMore(false)
                 setLoading(false)
-            }, 1000)
+            // }, 1000)
         }      
         loadMorePokemon();
         

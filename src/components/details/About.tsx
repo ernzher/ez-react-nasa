@@ -36,7 +36,7 @@ const About: React.FC<Props> = ({ pokemon }) => {
     const dataLabelColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600')
 
     return (
-        <VStack spacing={{ base: 5, md: 10 }} fontWeight="bold">
+        <VStack spacing={{ base: 5, md: 10 }} fontWeight={{ base: "normal", md: "bold" }}>
             <Text textAlign='center' fontSize={['xs', 'sm', 'md', 'lg']}>{ pokemon.description }</Text>
             <Flex 
                 borderRadius={20} 

@@ -22,7 +22,7 @@ const TypeBadge: React.FC<Props> = ({type}) => {
     return (
         <Box 
             px={1}  
-            w={[12, 14, 16]} 
+            w={[14, 16, 20]} 
             bgColor={`type.${type}`} 
             textAlign="center" 
             borderRadius={5}

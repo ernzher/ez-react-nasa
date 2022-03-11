@@ -86,7 +86,7 @@ const theme = extendTheme({
                     borderRadius: 30,
                 },
             }
-        }
+        },
     },
 })
 

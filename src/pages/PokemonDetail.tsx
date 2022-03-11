@@ -45,9 +45,9 @@ const PokemonDetail = () => {
             case 'about':
                 return <About pokemon={ pokemon } />;
             case 'stats':
-                return <Stats />;
+                return <Stats pokemon={ pokemon }/>;
             case 'moves':
-                return <Moves />;
+                return <Moves pokemon={ pokemon } />;
         }
     }
     return (
