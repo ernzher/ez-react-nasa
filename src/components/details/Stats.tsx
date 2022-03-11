@@ -81,24 +81,24 @@ const Stats: React.FC<Props> = ({ pokemon }) => {
                     </Tr>
                 </Tbody>
             </Table>
-            <VStack py={5} alignItems='left' w={['100%', '90%', '80%', '70%']}>
-                <Text fontSize={{base: 'md', md:'xl'}} fontFamily="Roboto Mono" fontWeight='bold'>Battle Condition</Text>
+            <VStack py={5} alignItems='left' w={['100%', '90%', '80%', '70%']} spacing={5}>
+                <Text textAlign='center' fontSize={{base: 'xl', md:'2xl'}} fontFamily="Roboto Mono" fontWeight='bold'>Battle Condition</Text>
                 <Flex direction={{base: 'column', xl: 'row'}} alignItems={{base: 'left', xl: 'center'}}>
-                    <Text fontSize={['xs','sm', 'md' ]} w="40%">Weak against: </Text>
+                    <Text fontSize={['xs','sm', 'md' ]} w="47%">Weak against: </Text>
                     <SimpleGrid py={2} columns={[5, 6, 7]} spacingX={3} spacingY={1}>
                         {
-                            pokemon.battle_condition.double_damage_from.map(type => (
-                                <TypeBadge type={type}/>
+                            pokemon.battle_condition.double_damage_from.map((type, index) => (
+                                <TypeBadge type={type} key={index}/>
                             ))
                         }
                     </SimpleGrid>
                 </Flex>
                 <Flex direction={{base: 'column', xl: 'row'}} alignItems={{base: 'left', xl: 'center'}}>
-                    <Text fontSize={['xs','sm', 'md' ]}  w="40%">Effective against: </Text>
+                    <Text fontSize={['xs','sm', 'md' ]}  w="47%">Effective against: </Text>
                     <SimpleGrid py={2} columns={[5, 6, 7]} spacingX={3} spacingY={1}>
                         {
-                            pokemon.battle_condition.double_damage_to.map(type => (
-                                <TypeBadge type={type}/>
+                            pokemon.battle_condition.double_damage_to.map((type, index) => (
+                                <TypeBadge type={type} key={index} />
                             ))
                         }
                     </SimpleGrid>

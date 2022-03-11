@@ -59,7 +59,7 @@ const PokemonDetail = () => {
             </Helmet>
             {
                 pokemon && (
-                    <Box fontFamily="Roboto Mono" bgGradient={`linear(to-b, transparent, type.${pokemon.types[0]}, transparent )`} position="relative">
+                    <Box fontFamily="Roboto Mono" bgGradient={`linear(to-b, transparent, type.${pokemon.types[0]}, transparent )`} position="relative" h="70%">
                         <Flex  p={{ base:5 , md: 10 }} justifyContent='space-between' alignItems='center'>
                             <VStack align='left'>
                                 <Text fontSize={{ base:"2xl", md: "4xl" }} fontWeight={1000} >{pokemon.name}</Text>
@@ -82,7 +82,7 @@ const PokemonDetail = () => {
                             <Image src={pokemon.img} h={[150,170,200]}/> 
                         </Box>
                         <Box h={{ base: 110, md: 38 }}></Box>
-                        <Box borderTopRadius={30} bgSize="cover" bgColor={containerBgColor}  pt={85}>
+                        <Box borderTopRadius={30} bgColor={containerBgColor}  pt={85} h={{ base: '100vh', md:"90vh"}} >
                             <Flex p={5} justifyContent='space-around' overflow='hidden'>
                                 <Button
                                     w={[32,48, 52]}
@@ -120,18 +120,12 @@ const PokemonDetail = () => {
                                 >
                                     Moves
                                 </Button>
-                              </Flex>
+                            </Flex>
                             <Box px={{ base:5 , md: 10 }} py={{ base:0 , md: 5 }}>
                                 { renderCategory(pokemon, activeCategory) }
                             </Box>
                         </Box>                        
-                    <VStack>
-                        
-                    </VStack>
                     </Box>
-                    
-                    
-                    
                 )
             }
         </Box>
