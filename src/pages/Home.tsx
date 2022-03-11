@@ -7,7 +7,7 @@ import PokeList from '../components/home/PokeList'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import usePokemons from '../hooks/usePokemons'
 import ScrollToButton from '../components/common/ScrollToButton'
-
+import { Helmet } from "react-helmet-async"
 interface State {
     offset: number,
     pageNumber: number
@@ -49,6 +49,10 @@ const Home = () => {
 
     return (
        <Box position="relative">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{`Home | Pokédex`}</title>
+            </Helmet>
             <Banner scrollToSearch={scrollToSearch}/>
             <PokeList pokemons={pokemons} loading={loading} lastPokemonElementRef={lastPokemonElementRef} searchPokemon={searchPokemon} clearData={clearData} />
             <ScrollToButton scrollToFunction={scrollToSearch}/>

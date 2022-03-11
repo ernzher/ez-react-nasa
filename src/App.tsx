@@ -8,6 +8,7 @@ import {
   ChakraProvider,
   Box
 } from "@chakra-ui/react"
+import { HelmetProvider } from "react-helmet-async";
 import theme from "./theme"
 import '@fontsource/lato'
 import '@fontsource/roboto'
@@ -19,17 +20,19 @@ import PokemonDetail from "./pages/PokemonDetail";
 
 export const App = () => (
     <BrowserRouter>
-        <ChakraProvider theme={theme}>
-            <Box minH='100vh'>
-                <Header></Header>
-                <Box marginTop={20}>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/pokemon/:name" element={<PokemonDetail />} />
-                    </Routes>
+        <HelmetProvider>
+            <ChakraProvider theme={theme}>
+                <Box minH='100vh'>
+                    <Header></Header>
+                    <Box marginTop={20}>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/pokemon/:name" element={<PokemonDetail />} />
+                        </Routes>
+                    </Box>
                 </Box>
-            </Box>
-        </ChakraProvider>
+            </ChakraProvider>
+        </HelmetProvider>
     </BrowserRouter>
 
 )

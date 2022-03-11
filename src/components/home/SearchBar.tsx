@@ -8,7 +8,7 @@ import {
 	InputLeftElement,
 	InputRightAddon,
 } from '@chakra-ui/react'
-import { SearchIcon, CloseIcon } from '@chakra-ui/icons'
+import { Search2Icon, CloseIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
 
 interface Props {
@@ -32,9 +32,9 @@ const SearchBar: React.FC<Props> = ({ searchPokemon, isSearching, clearData }) =
 			<InputGroup size='md'>
 				<InputLeftElement
 					pointerEvents='none'
-					children={<SearchIcon color='gray.500' />}
+					children={<Search2Icon color='gray.500' />}
 				/>
-				<Input type='text' value={query} onChange={handleChange} focusBorderColor="brand.200" placeholder='Enter a pokémon ID or name here!' />				
+				<Input type='text' value={query} onChange={handleChange} focusBorderColor="none" placeholder='Enter a pokémon ID or name here!' />				
 				<InputRightAddon
 					p={0}
 					children={

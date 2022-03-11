@@ -21,6 +21,7 @@ import Stats from '../components/details/Stats';
 import Moves from '../components/details/Moves';
 import TypeBadge from '../components/common/TypeBadge';
 import { Pokemon } from '../hooks/usePokemons';
+import { Helmet } from "react-helmet-async"
 
 const PokemonDetail = () => {
     const containerBgColor = useColorModeValue("whiteAlpha.600", "blackAlpha.600")
@@ -52,6 +53,10 @@ const PokemonDetail = () => {
     }
     return (
         <Box>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{`${pokemon && pokemon.name} | Pokédex`} </title>
+            </Helmet>
             {
                 pokemon && (
                     <Box fontFamily="Roboto Mono" bgGradient={`linear(to-b, transparent, type.${pokemon.types[0]}, transparent )`} position="relative">

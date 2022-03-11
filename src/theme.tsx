@@ -85,6 +85,7 @@ const theme = extendTheme({
                     color: "black",
                     borderRadius: 30,
                 },
+                
             }
         },
     },
