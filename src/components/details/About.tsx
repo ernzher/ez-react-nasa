@@ -1,33 +1,21 @@
 import React from 'react'
 import { 
     Box,
-    SimpleGrid,
-    Spinner,
     Flex,
     Text,
-    Link,
     HStack,
-    Image,
     VStack,
-    Button,
-    Divider,
-    Grid,
-    GridItem,
     Table,
-    Thead,
     Tbody,
-    Tfoot,
     Tr,
-    Th,
     Td,
-    TableCaption,
     useColorModeValue
 } from '@chakra-ui/react'
 import { TimeIcon, UpDownIcon } from '@chakra-ui/icons'
-import { Pokemon } from '../../hooks/usePokemons';
+import { PokemonDetails } from '../../hooks/usePokemons';
 
 interface Props {
-    pokemon: Pokemon
+    pokemon: PokemonDetails
 }
 
 const About: React.FC<Props> = ({ pokemon }) => {

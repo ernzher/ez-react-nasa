@@ -1,33 +1,20 @@
 import React from 'react'
 import { 
-    Box,
     SimpleGrid,
-    Spinner,
     Flex,
     Text,
-    Link,
-    HStack,
-    Image,
     VStack,
-    Button,
-    Divider,
-    Grid,
-    GridItem,
     Table,
-    Thead,
     Tbody,
-    Tfoot,
     Tr,
-    Th,
     Td,
-    TableCaption,
     useColorModeValue
 } from '@chakra-ui/react'
 import LevelBar from '../common/LevelBar'
-import { Pokemon } from '../../hooks/usePokemons';
+import { PokemonDetails } from '../../hooks/usePokemons';
 import TypeBadge from '../common/TypeBadge';
 interface Props {
-    pokemon: Pokemon
+    pokemon: PokemonDetails
 }
 
 const Stats: React.FC<Props> = ({ pokemon }) => {

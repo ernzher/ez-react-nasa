@@ -1,43 +1,35 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { FaMars, FaVenus } from 'react-icons/fa'
 
-interface State {
-    loading: boolean,
-    pokemons: {
-        id: number,
-        name: string,
-        height: {
-            m: number,
-            foot: string
-        }, 
-        weight: {
-            kg: number,
-            lbs: number
-        }, 
-        img: string,
-        types: string[],
-        abilities: string[],
-        stats: {
-            stat_name: string,
-            base_stat: number
-        }[],
-        moves: string[]
-    }[],
-    pokemonSpecies: {
-        species_name: string,
-        egg_groups: string[],
-        habitat: string,
-        growth_rate: string,
-        description: string
-    }
-    hasMore: boolean,
-    query: string,
-}
 
 export interface Pokemon {
     id: number,
     name: string,
+    gender: string | null,
+    height: {
+        m: number,
+        foot: string
+    }, 
+    weight: {
+        kg: number,
+        lbs: number
+    }, 
+    img: string,
+    types: string[],
+    abilities: string[],
+    stats: {
+        stat_name: string,
+        base_stat: number
+    }[],
+    moves: string[]
+}
+
+export interface PokemonDetails {
+    id: number,
+    name: string,
+    gender: string | null,
     height: {
         m: number,
         foot: string
@@ -54,6 +46,10 @@ export interface Pokemon {
         base_stat: number
     }[],
     moves: string[],
+    prevAndNext: {
+        prev_name: string,
+        next_name: string
+    }
     species_name: string,
     egg_groups: string[],
     habitat: string,
@@ -69,10 +65,10 @@ interface BattleCondition {
 
 const usePokemons = (offset?: number, pageNumber?: number) => {
 
-    const [loading, setLoading] = useState<State["loading"]>(false)
-    const [pokemons, setPokemons] = useState<State["pokemons"]>([])
-    const [hasMore, setHasMore] = useState<State["hasMore"]>(true)
-    const [query, setQuery] = useState<State["query"]>("")
+    const [loading, setLoading] = useState(false)
+    const [pokemons, setPokemons] = useState<Pokemon[]>([])
+    const [hasMore, setHasMore] = useState(true)
+    const [query, setQuery] = useState("")
 
     const convertToPounds = (kg: number): number => Math.round(kg * 2.205)
 
@@ -89,6 +85,17 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
     const toCapitalCase = ( text: string ): string => text.charAt(0).toUpperCase() + (text.length > 1 && text.slice(1))
 
     const processString = (text: string): string => text.replace(/\f|\n|-/g,' ')
+
+    const renderGender = (gender: string | null) => {
+        switch(gender) {
+            case 'f': 
+                return <FaVenus/>;
+            case 'm':
+                return <FaMars/>;
+            default:
+                return;
+        }
+    }
 
     const fetchPokemons = async () => {
         try {
@@ -133,11 +140,18 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         }
     }
 
+    const getPrevAndNextPokemon = async (id: any) => {
+        const prev = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id-1}`)
+        const next = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id+1}`)
+        return [prev.data.name, next.data.name]
+    }
+
     const getPokemonData = async(idOrName: any) => {
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);   
         return {
             id: data.id,
             name: toCapitalCase(data.name),
+            gender: data.name.includes('-f') ? 'f' : data.name.includes('-m') ? 'm' : null,
             height: {
                 m: data.height/10,
                 foot: convertToFoot(data.height/10)
@@ -162,9 +176,14 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
     const getPokemonDetailData = async (idOrName: any) => {
         const pokemonData = await getPokemonData(idOrName);
         const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${idOrName}`);   
-        const battleConditionData = await fetchBattleConditionData(pokemonData.types)
+        const battleConditionData = await fetchBattleConditionData(pokemonData.types);
+        const prevAndNext = await getPrevAndNextPokemon(pokemonData.id)
         return {
             ...pokemonData,
+            prevAndNext: {
+                prev_name: prevAndNext[0],
+                next_name: prevAndNext[1]
+            },
             species_name: data.genera.find((genus: any) => genus.language.name === "en").genus,
             egg_groups: data.egg_groups.map((egg_group: any) => toCapitalCase(egg_group.name)),
             habitat: toCapitalCase(data.habitat.name),
@@ -175,7 +194,7 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
     }
 
     const getPokemonList = async (query ?: string) => {
-        let list: State["pokemons"] = []
+        let list: Pokemon[] = []
         if (!query) {
             const data = await fetchPokemons();   
             for (const result of data.results) {
@@ -240,7 +259,7 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         
     },[offset, pageNumber])
 
-    return {loading, pokemons, hasMore, query, searchPokemon, getPokemonData, getPokemonDetailData}
+    return {loading, pokemons, hasMore, query, searchPokemon, getPokemonData, getPokemonDetailData, renderGender}
 }
 
 export default usePokemons

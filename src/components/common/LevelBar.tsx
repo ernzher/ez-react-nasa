@@ -26,7 +26,7 @@ const LevelBar: React.FC<Props> = ({bgGradient, minVal, stat}) => {
         }
         
         minVal && setInnerBarPercentage((minVal/maxStat) * 100)
-    }, [])
+    }, [minVal, stat])
     
     return (
         <Box position='relative' h={{base: 2, md: 3}} bgColor="blackAlpha.400" w="100%" borderRadius={30} >

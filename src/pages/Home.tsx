@@ -8,6 +8,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import usePokemons from '../hooks/usePokemons'
 import ScrollToButton from '../components/common/ScrollToButton'
 import { Helmet } from "react-helmet-async"
+
+
 interface State {
     offset: number,
     pageNumber: number
@@ -22,7 +24,8 @@ const Home = () => {
         hasMore,
         loading,
         query,
-        searchPokemon
+        searchPokemon,
+        renderGender
     } = usePokemons(offset, pageNumber)
 
     const observer = useRef<any>()
@@ -46,7 +49,7 @@ const Home = () => {
         setPageNumber(1)
     }
     const scrollToSearch = ():void => document.getElementById("searchRef")?.scrollIntoView({behavior: "smooth"})
-
+   
     return (
        <Box position="relative">
             <Helmet>
@@ -54,7 +57,14 @@ const Home = () => {
                 <title>{`Home | Pokédex`}</title>
             </Helmet>
             <Banner scrollToSearch={scrollToSearch}/>
-            <PokeList pokemons={pokemons} loading={loading} lastPokemonElementRef={lastPokemonElementRef} searchPokemon={searchPokemon} clearData={clearData} />
+            <PokeList 
+                pokemons={pokemons} 
+                loading={loading} 
+                lastPokemonElementRef={lastPokemonElementRef} 
+                searchPokemon={searchPokemon} 
+                clearData={clearData} 
+                renderGender={renderGender}
+            />
             <ScrollToButton scrollToFunction={scrollToSearch}/>
         </Box>
     )

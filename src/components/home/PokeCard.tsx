@@ -11,31 +11,15 @@ import {
 } from '@chakra-ui/react'
 import TypeBadge from '../common/TypeBadge'
 import { Link as ReactRouterLink } from 'react-router-dom'
+import { Pokemon } from '../../hooks/usePokemons';
 
 interface Props
 {
-    pokemon: {
-        id: number,
-        name: string,
-        height: {
-            m: number,
-            foot: string
-        }, 
-        weight: {
-            kg: number,
-            lbs: number
-        }, 
-        img: string,
-        types: string[],
-        abilities: string[],
-        stats: {
-            stat_name: string,
-            base_stat: number
-        }[]
-    },
+    pokemon: Pokemon,
+    renderGender: (gender: string | null) => any 
 }
 
-const PokeCard: React.FC<Props> = ({pokemon}) => {
+const PokeCard: React.FC<Props> = ({pokemon, renderGender}) => {
     const card_color = useColorModeValue("gray.100", "gray.700")
     const box_shadow = useColorModeValue("2xl", "")
     return (
@@ -57,7 +41,10 @@ const PokeCard: React.FC<Props> = ({pokemon}) => {
                 </Flex>
                 <VStack spacing={3}>
                     <Text fontSize={['xs', 'sm', 'md']} color='gray.500'># {pokemon.id.toLocaleString('en-US', {minimumIntegerDigits: 3})}</Text>
-                    <Text fontSize={['md', 'lg','xl']} mt={0}>{pokemon.name}</Text>
+                    <Flex alignItems='center' fontSize={['md', 'lg','xl']}  mt={0}>
+                        <Text fontWeight={1000} pr={1}>{pokemon.name.replace(/-f|-m/g,'')} </Text>
+                        { renderGender(pokemon.gender) }
+                    </Flex>
                     <HStack py={2} spacing={1}>
                         {
                             pokemon.types.map((type, index) => {

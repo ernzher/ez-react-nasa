@@ -1,37 +1,17 @@
 import React from 'react'
 import { 
-    Box,
     SimpleGrid,
-    Spinner,
     Flex,
-    Text,
-    Link,
-    HStack,
-    Image,
-    VStack,
-    Button,
-    Divider,
-    Grid,
-    GridItem,
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    useColorModeValue,
     UnorderedList,
     ListItem,
     useBreakpointValue,
     Center
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
-import { Pokemon } from '../../hooks/usePokemons';
+import { PokemonDetails } from '../../hooks/usePokemons';
 
 interface Props {
-    pokemon: Pokemon,
+    pokemon: PokemonDetails,
 }
 
 const Moves: React.FC<Props> = ({ pokemon }) => {
@@ -44,7 +24,7 @@ const Moves: React.FC<Props> = ({ pokemon }) => {
         for (let i = 0; i < pokemon.moves.length; i += chunkSize) 
             chunkedList.push(pokemon.moves.slice(i, i+chunkSize))
         setMoveLists(chunkedList)
-    }, [chunkNum])
+    }, [pokemon, chunkNum])
 
     return (
         <Flex justifyContent='center' alignItems='center'>

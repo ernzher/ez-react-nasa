@@ -11,33 +11,17 @@ import {
 import PokeCard from './PokeCard'
 import CustomDivider from '../common/CustomDivider'
 import SearchBar from './SearchBar'
+import { Pokemon } from '../../hooks/usePokemons';
 interface Props{
-    pokemons: {
-        id: number,
-        name: string,
-        height: {
-            m: number,
-            foot: string
-        }, 
-        weight: {
-            kg: number,
-            lbs: number
-        }, 
-        img: string,
-        types: string[],
-        abilities: string[],
-        stats: {
-            stat_name: string,
-            base_stat: number
-        }[]
-    }[],
+    pokemons: Pokemon[]
     loading: boolean,
     lastPokemonElementRef: (node: any) => void,
     searchPokemon: (query: string) => void,
-    clearData: () => void
+    clearData: () => void,
+    renderGender: (gender: string | null) => any
 }
 
-const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, searchPokemon, clearData}) => {
+const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, searchPokemon, clearData, renderGender}) => {
     return (
         <Box mx={[3, 10, 15, 20]} py={10} position="relative">
             <div id="searchRef" style={{ position: "absolute" , top: "-50px" }}></div>
@@ -57,13 +41,13 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
                                 if (pokemon.img) {
                                     if (pokemons.length === index+1) {
                                         return (
-                                            <div key={index} ref={lastPokemonElementRef} >
-                                                <PokeCard pokemon={pokemon} />
+                                            <div key={index} ref={lastPokemonElementRef}>
+                                                <PokeCard pokemon={pokemon} renderGender={renderGender}/>                                                
                                             </div>
                                         )
                                     }
                                     return (
-                                        <PokeCard pokemon={pokemon} key={index}/>
+                                        <PokeCard key={index} pokemon={pokemon} renderGender={renderGender}/>
                                     )
                                 }
                             })
