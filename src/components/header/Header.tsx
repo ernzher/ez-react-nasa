@@ -14,7 +14,7 @@ import { ColorModeSwitcher } from './ColorModeSwitcher'
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
     const box_shadow = useColorModeValue('md', '')
-    const bg_color = useColorModeValue("white", "gray.800")
+    const bg_color = useColorModeValue("whiteAlpha.900", "gray.800")
     const toggle = () => setIsOpen(!isOpen)
     
     return (
@@ -25,7 +25,7 @@ const Header = () => {
             right={0} 
             top={0} 
             boxShadow={box_shadow} 
-            opacity="0.9"
+            // opacity="0.9"
             zIndex={100}
         >
             {/* overlay */}

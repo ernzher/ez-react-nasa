@@ -26,6 +26,7 @@ const PokemonDetail = () => {
     const containerBgColor = useColorModeValue("whiteAlpha.600", "blackAlpha.600")
     const activeCategoryColor = useColorModeValue("black", "white")
     const inactiveCategoryColor = useColorModeValue("blackAlpha.500", "whiteAlpha.500")
+    const convtainerBoxShadow = useColorModeValue("dark-lg", "none")
 
     const { name } = useParams();
     const [pokemon, setPokemon] = useState<PokemonDetails>();
@@ -88,17 +89,17 @@ const PokemonDetail = () => {
                             <Image src={pokemon.img} h={[150,170,200]}/> 
                         </Box>
                         <Box h={{ base: 110, md: 38 }}></Box>
-                        <Box borderTopRadius={30} bgColor={containerBgColor} minH="90vh" pt={20} position="relative">
+                        <Box borderTopRadius={30} bgColor={containerBgColor} minH="90vh" pt={20} position="relative" boxShadow={convtainerBoxShadow}>
                             {
                                 pokemon.prevAndNext.prev_id &&
                                 <Link position='absolute' top={0} left={0} py={8} px={5} as={ReactRouterLink} to={`/pokemon/${pokemon.prevAndNext.prev_id}`}>
-                                    <ChevronLeftIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)" }}/>
+                                    <ChevronLeftIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)", transition: "all .5s" }}/>
                                 </Link>
                             }
                             {
                                 pokemon.prevAndNext.next_id &&
                                 <Link position='absolute' top={0} right={0} py={8} px={5} as={ReactRouterLink} to={`/pokemon/${pokemon.prevAndNext.next_id}`}>
-                                    <ChevronRightIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)" }}/>
+                                    <ChevronRightIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)", transition: "all .5s" }}/>
                                 </Link>
                             }
                             <Flex p={5} justifyContent='space-around' alignItems='center'>

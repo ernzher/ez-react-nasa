@@ -13,7 +13,6 @@ const MenuLink = () => {
 				<HStack spacing={{ md: 8, lg: 20}} letterSpacing={1.1}>
 					<Link href="/" _hover={{ color:"brand.100", transform: "scale(1.1)"}}>Home</Link>
 					<Link href="/" _hover={{ color:"brand.100", transform: "scale(1.1)"}}>Technologies</Link>
-					<Link href="/" _hover={{ color:"brand.100", transform: "scale(1.1)"}}>Projects</Link>
 				</HStack>
 			</Flex>
 		</Box>

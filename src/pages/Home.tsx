@@ -15,7 +15,7 @@ interface State {
     pageNumber: number
 }
 
-const Home = () => {
+const Home = () => {    
     const [offset, setOffset] = useState<State["offset"]>(0)
     const [pageNumber, setPageNumber] = useState<State["pageNumber"]>(1)
 
