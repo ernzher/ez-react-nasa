@@ -47,20 +47,26 @@ export interface PokemonDetails {
     }[],
     moves: string[],
     prevAndNext: {
-        prev_name: string,
-        next_name: string
+        prev_id: number,
+        next_id: number
     }
     species_name: string,
     egg_groups: string[],
     habitat: string,
     growth_rate: string,
     description: string,
-    battle_condition: BattleCondition
-}
-
-interface BattleCondition {
-    double_damage_from: string[]
-    double_damage_to: string[]
+    battle_condition: {
+        double_damage_from: string[]
+        double_damage_to: string[]
+    },
+    evolution_chain: {
+        order: number
+        id: number
+        name: string
+        img: string
+        gender: string
+    }[],
+    // evolution_chain_url: string
 }
 
 const usePokemons = (offset?: number, pageNumber?: number) => {
@@ -140,57 +146,96 @@ const usePokemons = (offset?: number, pageNumber?: number) => {
         }
     }
 
-    const getPrevAndNextPokemon = async (id: any) => {
-        const prev = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id-1}`)
-        const next = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id+1}`)
-        return [prev.data.name, next.data.name]
+    const getEvolutionChain = async (url: string) => {
+        let result: any[] = []
+        let order = 1
+        const {data} = await axios.get(url)
+        let evoData: any[] = [data.chain];
+        let pokemonData;
+        do {
+            if (evoData.length > 1) {
+                let evolutions: any[] = []
+                for (const data of evoData) {
+                    pokemonData = await getPokemonData(data.species.name)
+                    pokemonData && evolutions.push({
+                        order: order,
+                        id: pokemonData.id,
+                        name: pokemonData.name,
+                        img: pokemonData.img,
+                        gender: pokemonData.gender
+                    });
+                }
+                result.push(evolutions)
+            } else {
+                
+                pokemonData = await getPokemonData(evoData[0].species.name)
+                pokemonData && result.push({
+                    order: order,
+                    id: pokemonData.id,
+                    name: pokemonData.name,
+                    img: pokemonData.img,
+                    gender: pokemonData.gender
+                })
+            }
+            evoData = evoData[0].evolves_to;
+            order++;
+        } while (evoData.length);
+        return result
     }
 
     const getPokemonData = async(idOrName: any) => {
-        const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);   
-        return {
-            id: data.id,
-            name: toCapitalCase(data.name),
-            gender: data.name.includes('-f') ? 'f' : data.name.includes('-m') ? 'm' : null,
-            height: {
-                m: data.height/10,
-                foot: convertToFoot(data.height/10)
-            } ,
-            weight: {
-                kg: data.weight/10,
-                lbs: convertToPounds(data.weight/10)
-            },
-            img: data.sprites.other.dream_world.front_default,
-            types: data.types.map((type: any) => type.type.name),
-            abilities: data.abilities.map((ability: any) => toCapitalCase(processString(ability.ability.name))),
-            stats: data.stats.map((stat: any) => {
-                return {
-                    stat_name: stat.stat.name, 
-                    base_stat: stat.base_stat
-                } 
-            }),
-            moves: data.moves.map((move: any) => toCapitalCase(processString(move.move.name)))
-        } 
+        try {
+            const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idOrName}`);              
+            return {
+                id: data.id,
+                name: toCapitalCase(data.name),
+                gender: data.name.includes('-f') ? 'f' : data.name.includes('-m') ? 'm' : null,
+                height: {
+                    m: data.height/10,
+                    foot: convertToFoot(data.height/10)
+                } ,
+                weight: {
+                    kg: data.weight/10,
+                    lbs: convertToPounds(data.weight/10)
+                },
+                img: data.sprites.other.dream_world.front_default || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
+                types: data.types.map((type: any) => type.type.name),
+                abilities: data.abilities.map((ability: any) => toCapitalCase(processString(ability.ability.name))),
+                stats: data.stats.map((stat: any) => {
+                    return {
+                        stat_name: stat.stat.name, 
+                        base_stat: stat.base_stat
+                    } 
+                }),
+                moves: data.moves.map((move: any) => toCapitalCase(processString(move.move.name)))
+            } 
+        } catch (error) {
+            return null
+        }
     }
 
     const getPokemonDetailData = async (idOrName: any) => {
         const pokemonData = await getPokemonData(idOrName);
-        const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${idOrName}`);   
-        const battleConditionData = await fetchBattleConditionData(pokemonData.types);
-        const prevAndNext = await getPrevAndNextPokemon(pokemonData.id)
-        return {
-            ...pokemonData,
-            prevAndNext: {
-                prev_name: prevAndNext[0],
-                next_name: prevAndNext[1]
-            },
-            species_name: data.genera.find((genus: any) => genus.language.name === "en").genus,
-            egg_groups: data.egg_groups.map((egg_group: any) => toCapitalCase(egg_group.name)),
-            habitat: toCapitalCase(data.habitat.name),
-            growth_rate: toCapitalCase(processString(data.growth_rate.name)),
-            description: processString(data.flavor_text_entries.find((flavor_text_entry: any) => flavor_text_entry.language.name === "en").flavor_text),
-            battle_condition: battleConditionData
-        }  
+        if (pokemonData) {
+            const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${idOrName}`);   
+            const evolutionChain = await getEvolutionChain(data.evolution_chain.url)
+            const battleConditionData = await fetchBattleConditionData(pokemonData.types);
+            return {
+                ...pokemonData,
+                prevAndNext: {
+                    prev_id: pokemonData.id - 1,
+                    next_id: pokemonData.id + 1
+                },
+                species_name: data.genera.find((genus: any) => genus.language.name === "en").genus,
+                egg_groups: data.egg_groups.map((egg_group: any) => toCapitalCase(egg_group.name)),
+                habitat: data.habitat ? toCapitalCase(data.habitat.name) : "Unknown",
+                growth_rate: toCapitalCase(processString(data.growth_rate.name)),
+                description: processString(data.flavor_text_entries.find((flavor_text_entry: any) => flavor_text_entry.language.name === "en").flavor_text),
+                battle_condition: battleConditionData,
+                evolution_chain: evolutionChain
+            }  
+        } 
+        return null
     }
 
     const getPokemonList = async (query ?: string) => {

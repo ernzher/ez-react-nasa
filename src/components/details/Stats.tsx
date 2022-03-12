@@ -21,7 +21,7 @@ const Stats: React.FC<Props> = ({ pokemon }) => {
     const statLabelColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600')
     
     return (
-        <VStack fontWeight={{ base: "normal", md: "bold" }} fontSize={['xs', 'sm', 'md', 'lg']} >
+        <VStack fontSize={['xs', 'sm', 'md', 'lg']} >
             <Table variant='unstyled'  w={['100%', '90%', '80%', '70%']} >
                 <Tbody >
                     <Tr>

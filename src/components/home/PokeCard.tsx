@@ -23,7 +23,7 @@ const PokeCard: React.FC<Props> = ({pokemon, renderGender}) => {
     const card_color = useColorModeValue("gray.100", "gray.700")
     const box_shadow = useColorModeValue("2xl", "")
     return (
-        <Link variant="popout" as={ReactRouterLink} to={`/pokemon/${pokemon.name.toLowerCase()}`}>
+        <Link variant="popout" as={ReactRouterLink} to={`/pokemon/${pokemon.id}`}>
             <Box 
                 bg={card_color} 
                 minW={[130, 150, 200]} 

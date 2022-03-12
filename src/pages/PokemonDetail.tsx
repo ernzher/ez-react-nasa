@@ -20,6 +20,7 @@ import TypeBadge from '../components/common/TypeBadge';
 import { PokemonDetails } from '../hooks/usePokemons';
 import { Helmet } from "react-helmet-async"
 import { ChevronLeftIcon,ChevronRightIcon } from '@chakra-ui/icons';
+import Evolutions from '../components/details/Evolutions';
 
 const PokemonDetail = () => {
     const containerBgColor = useColorModeValue("whiteAlpha.600", "blackAlpha.600")
@@ -34,7 +35,7 @@ const PokemonDetail = () => {
     useEffect(() => {
         const getPokemon = async () => {
             const data = await getPokemonDetailData(name);            
-            setPokemon(data)                    
+            data && setPokemon(data)                    
         }
         getPokemon();
     }, [name])  
@@ -47,6 +48,8 @@ const PokemonDetail = () => {
                 return <Stats pokemon={ pokemon }/>;
             case 'moves':
                 return <Moves pokemon={ pokemon } />;
+            case 'evolutions':
+                return <Evolutions pokemon={ pokemon } renderGender={renderGender} />;    
         }
     }
 
@@ -86,16 +89,22 @@ const PokemonDetail = () => {
                         </Box>
                         <Box h={{ base: 110, md: 38 }}></Box>
                         <Box borderTopRadius={30} bgColor={containerBgColor} minH="90vh" pt={20} position="relative">
-                            <Link position='absolute' top={0} left={0} pt={8} px={5} h="100%" as={ReactRouterLink} to={`/pokemon/${pokemon.prevAndNext.prev_name}`}>
-                                <ChevronLeftIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)" }}/>
-                            </Link>
-                            <Link position='absolute' top={0} right={0} pt={8} px={5} h="100%" as={ReactRouterLink} to={`/pokemon/${pokemon.prevAndNext.next_name}`}>
-                                <ChevronRightIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)" }}/>
-                            </Link>
-                            <Flex p={5} justifyContent='space-around'>
+                            {
+                                pokemon.prevAndNext.prev_id &&
+                                <Link position='absolute' top={0} left={0} py={8} px={5} as={ReactRouterLink} to={`/pokemon/${pokemon.prevAndNext.prev_id}`}>
+                                    <ChevronLeftIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)" }}/>
+                                </Link>
+                            }
+                            {
+                                pokemon.prevAndNext.next_id &&
+                                <Link position='absolute' top={0} right={0} py={8} px={5} as={ReactRouterLink} to={`/pokemon/${pokemon.prevAndNext.next_id}`}>
+                                    <ChevronRightIcon boxSize={{ base: 10, md: 14 }} color={inactiveCategoryColor} _hover={{ color: activeCategoryColor, transform: "scale(1.2)" }}/>
+                                </Link>
+                            }
+                            <Flex p={5} justifyContent='space-around' alignItems='center'>
                                 <Button
-                                    w={[32,48, 52]}
-                                    fontSize={{ base: 'md', md: 'xl' }}
+                                    w={[20, 32,40, 52]}
+                                    fontSize={{ base: 'sm', md: 'lg' }}
                                     letterSpacing={1.1}
                                     color={activeCategory==="about" ? activeCategoryColor : inactiveCategoryColor}
                                     variant={activeCategory==="about" ? "" : "unstyled"} 
@@ -107,8 +116,8 @@ const PokemonDetail = () => {
                                     About
                                 </Button>
                                 <Button
-                                    w={[32,48, 52]}
-                                    fontSize={{ base: 'md', md: 'xl' }}
+                                    w={[20, 32,40, 52]}
+                                    fontSize={{ base: 'sm', md: 'lg' }}
                                     letterSpacing={1.1}
                                     color={activeCategory==="stats" ? activeCategoryColor : inactiveCategoryColor}
                                     variant={activeCategory==="stats" ? "" : "unstyled"} 
@@ -120,8 +129,21 @@ const PokemonDetail = () => {
                                     Stats
                                 </Button>
                                 <Button
-                                    w={[32,48,52]}
-                                    fontSize={{ base: 'md', md: 'xl' }}
+                                    w={[20,32,40,52]}
+                                    fontSize={{ base: 'sm', md: 'lg' }}
+                                    letterSpacing={1.1}
+                                    color={activeCategory==="evolutions" ? activeCategoryColor : inactiveCategoryColor}
+                                    variant={activeCategory==="evolutions" ? "" : "unstyled"} 
+                                    fontWeight={activeCategory==="evolutions" ? "bold" : ""}
+                                    borderBottom={activeCategory==="evolutions" ? `2px ${activeCategoryColor} solid` : ""}
+                                    onClick={() => setActiveCategory('evolutions')}
+                                    _hover={{ color: activeCategoryColor }}
+                                >
+                                    Evolutions
+                                </Button>
+                                <Button
+                                    w={[20,32,40,52]}
+                                    fontSize={{ base: 'sm', md: 'lg' }}
                                     letterSpacing={1.1}
                                     color={activeCategory==="moves" ? activeCategoryColor : inactiveCategoryColor}
                                     variant={activeCategory==="moves" ? "" : "unstyled"} 
@@ -132,6 +154,7 @@ const PokemonDetail = () => {
                                 >
                                     Moves
                                 </Button>
+                                
                             </Flex>
                             <Box px={{ base:5 , md: 10 }} py={{ base:0 , md: 5 }}>
                                 { renderCategory(pokemon, activeCategory) }

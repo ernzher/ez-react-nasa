@@ -24,8 +24,8 @@ const About: React.FC<Props> = ({ pokemon }) => {
     const dataLabelColor = useColorModeValue('blackAlpha.600', 'whiteAlpha.600')
 
     return (
-        <VStack spacing={{ base: 5, md: 10 }} fontWeight={{ base: "normal", md: "bold" }}>
-            <Text textAlign='center' fontSize={['xs', 'sm', 'md', 'lg']}>{ pokemon.description }</Text>
+        <VStack spacing={{ base: 5, md: 10 }} fontSize={['xs', 'sm', 'md', 'lg']}>
+            <Text textAlign='center'>{ pokemon.description }</Text>
             <Flex 
                 borderRadius={20} 
                 justifyContent='space-evenly' 
@@ -38,20 +38,20 @@ const About: React.FC<Props> = ({ pokemon }) => {
                 <VStack>
                     <HStack>
                         <TimeIcon/>
-                        <Text fontSize={['xs', 'sm', 'md', 'lg']} fontFamily={{base:'Roboto', md: 'Roboto Mono'}}>{ pokemon.weight.kg } kg ( {pokemon.weight.lbs} lbs )</Text>
+                        <Text fontFamily={{base:'Roboto', md: 'Roboto Mono'}}>{ pokemon.weight.kg } kg ( {pokemon.weight.lbs} lbs )</Text>
                     </HStack>
-                    <Text fontSize={['xs', 'sm', 'md', 'lg']}>Weight</Text>
+                    <Text>Weight</Text>
                 </VStack>
                 <Box h={10} w={.5} bgColor={dataLabelColor} />
                 <VStack>
                     <HStack>
                         <UpDownIcon />
-                        <Text fontSize={['xs', 'sm', 'md', 'lg']} fontFamily={{base:'Roboto', md: 'Roboto Mono'}}>{ pokemon.height.m } m ( {pokemon.height.foot} )</Text>
+                        <Text fontFamily={{base:'Roboto', md: 'Roboto Mono'}}>{ pokemon.height.m } m ( {pokemon.height.foot} )</Text>
                     </HStack>
-                    <Text fontSize={['xs', 'sm', 'md', 'lg']}>Height</Text>
+                    <Text>Height</Text>
                 </VStack>
             </Flex>
-            <Table variant='unstyled' w={['100%', '90%', '80%', '70%']} fontSize={{ base: 'sm', md: 'md' }}>
+            <Table variant='unstyled' w={['100%', '90%', '80%', '70%']}>
                 <Tbody>
                     <Tr>
                         <Td px={1} color={dataLabelColor} w="40%">Species</Td>

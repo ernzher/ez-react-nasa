@@ -71,8 +71,6 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
                     </Flex> 
                 )
             }
-            
-            
         </Box>
     )
 }
