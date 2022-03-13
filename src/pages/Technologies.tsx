@@ -5,11 +5,16 @@ import {
     Flex, 
     Text, 
     VStack,
-    useColorModeValue
+    useColorModeValue,
+    Divider,
+    HStack,
+    Image,
+    useColorMode,
+    SimpleGrid
 } from '@chakra-ui/react'
+import { FaBolt, FaCss3Alt, FaHtml5, FaJs, FaNodeJs, FaReact } from 'react-icons/fa'
 import { Helmet } from 'react-helmet-async'
 const Technologies = () => {
-
     return (
         <Box>
             <Helmet>
@@ -23,6 +28,53 @@ const Technologies = () => {
                     <Text fontSize={{ base:"sm", md:"md" }}>Every tool used to develop this project.</Text>
                 </VStack>
             </Flex>
+            <VStack align="left" p={{ base: 5, md: 20 }} spacing={5}>
+                <Text fontSize={{ base:"2xl",sm:"3xl", md:"4xl"}} letterSpacing={2}>Technology Stack</Text>
+                <Divider bgColor='brand.100' height={.5} />
+                <VStack align="left" color="gray.500" spacing={5}>
+                    <VStack align="left" spacing={5} py={5}>
+                        <Text fontSize={{ base:"xl",sm:"2xl", md:"3xl"}} >FRONT-END</Text>
+                        <Divider bgColor='gray.500' height={.2} />
+                        <SimpleGrid columns={[3,4,5]} spacing={5}>
+                            <VStack>
+                                <FaHtml5 size={50}/>
+                                <Text>HTML5</Text>
+                            </VStack>
+                            <VStack>
+                                <FaCss3Alt size={50}/>
+                                <Text>CSS3</Text>
+                            </VStack>
+                            <VStack>
+                                <FaReact size={50}/>
+                                <Text>React.tsx</Text>
+                            </VStack>
+                            <VStack>
+                                <FaBolt size={50}/>
+                                <Text>Chakra UI</Text>
+                            </VStack>
+                            <VStack>
+                                <Image src="/assets/icons/typescript_icon.svg" height={50}/>
+                                <Text>TypeScript</Text>
+                            </VStack>
+                        </SimpleGrid>    
+                    </VStack>
+                    <Divider bgColor='gray.500' height={.5} />
+                    <VStack align="left" spacing={5} py={5}>
+                        <Text fontSize={{ base:"xl",sm:"2xl", md:"3xl"}} >BACK-END</Text>
+                        <Divider bgColor='gray.500' height={.2} />
+                        <SimpleGrid columns={[3,4,5]} spacing={5}>
+                            <VStack>
+                                <FaNodeJs size={50}/>
+                                <Text>Node.js</Text>
+                            </VStack>
+                            <VStack>
+                                <Image src="/assets/icons/pokeball_icon.svg" height={50}/>
+                                <Text>PokéAPI</Text>
+                            </VStack>
+                        </SimpleGrid> 
+                    </VStack>  
+                </VStack>  
+            </VStack>
         </Box>
         
         

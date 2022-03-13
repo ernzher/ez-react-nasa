@@ -17,13 +17,11 @@ const MenuLink = () => {
 					<Link 
 						href="/" 
 						_hover={{ color:"brand.100"}} 
-						transition="all 0.6s"
 						color={route.pathname === '/' ? "brand.100" : ""}
 					>Home</Link>
 					<Link 
 						href="/technologies" 
 						_hover={{ color:"brand.100"}}
-						transition="all 0.6s"
 						color={route.pathname === '/technologies' ? "brand.100" : ""}
 					>Technologies</Link>
 				</HStack>

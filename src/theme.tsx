@@ -4,7 +4,7 @@ const theme = extendTheme({
     styles: {
         global: {
             body: {
-                transition: "all 0.6s ease-in-out"
+                transition: "all 0.6s"
             }
         }
     },
