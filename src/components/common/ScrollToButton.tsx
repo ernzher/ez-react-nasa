@@ -32,7 +32,7 @@ const ScrollToButton: React.FC<Props> = ({ scrollToFunction }) => {
     return (
         <Box position='fixed' bottom={10} right={currentState ? -40 : 0} transition="all 1.2s">
             <Button position="relative" onClick={scrollToFunction} w={16} size="lg" variant="pri_gradient" borderStartRadius={10} borderEndRadius={0} >
-                <ArrowUpIcon fontSize={{base: 'xl', md: '2xl'}} color="gray.600"/>
+                <ArrowUpIcon fontSize={{base: 'xl', md: '2xl'}} color="gray.800"/>
             </Button>
         </Box>
     )
