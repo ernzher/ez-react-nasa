@@ -66,7 +66,6 @@ export interface PokemonDetails {
         img: string
         gender: string
     }[],
-    // evolution_chain_url: string
 }
 
 const usePokemons = (offset?: number, pageNumber?: number) => {

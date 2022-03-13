@@ -3,21 +3,14 @@ import {
     Box,
     Image,
     Text,
-    HStack,
     VStack,
-    Table,
-    Tbody,
-    Tr,
-    Td,
     useColorModeValue,
     Flex,
     SimpleGrid,
     Stack,
-    useBreakpointValue
 } from '@chakra-ui/react'
 import { ArrowDownIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { PokemonDetails } from '../../hooks/usePokemons';
-import { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 interface Props {

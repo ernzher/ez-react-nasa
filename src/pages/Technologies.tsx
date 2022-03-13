@@ -1,15 +1,11 @@
 import React from 'react'
 import { 
     Box, 
-    Center, 
     Flex, 
     Text, 
     VStack,
-    useColorModeValue,
     Divider,
-    HStack,
     Image,
-    useColorMode,
     SimpleGrid
 } from '@chakra-ui/react'
 import { FaBolt, FaCss3Alt, FaHtml5, FaJs, FaNodeJs, FaReact } from 'react-icons/fa'
