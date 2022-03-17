@@ -24,7 +24,6 @@ interface Props{
 const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, searchPokemon, clearData, renderGender}) => {
     return (
         <Box mx={[3, 10, 15, 20]} py={10} position="relative">
-            <div id="searchRef" style={{ position: "absolute" , top: "-50px" }}></div>
             <SimpleGrid columns={{base: 1, md: 2}} mx={5} spacing={5} pb={5}>
                 <Box textAlign={{ base: "center", md: "left"}} cursor="pointer" onClick={() => { searchPokemon(""); clearData(); }} >
                     <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>

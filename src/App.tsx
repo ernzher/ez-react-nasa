@@ -18,7 +18,7 @@ import Header from "./components/header/Header"
 import Home from "./pages/Home";
 import PokemonDetail from "./pages/PokemonDetail";
 import ScrollToTop from "./hooks/ScrollToTop";
-import Technologies from "./pages/Technologies";
+import Pokemons from "./pages/Pokemons";
 
 export const App = () => (
     <BrowserRouter>
@@ -30,7 +30,7 @@ export const App = () => (
                         <Box marginTop={20}>
                             <Routes>
                                 <Route path="/" element={<Home />} />
-                                <Route path="/technologies" element={<Technologies />} />
+                                <Route path="/pokemons" element={<Pokemons />} />
                                 <Route path="/pokemon/:name" element={<PokemonDetail />} />
                             </Routes>
                         </Box>

@@ -9,12 +9,13 @@ import {
     useColorModeValue,
     Button,
 } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
-interface Props {
-    scrollToSearch: () => void
-}
+// interface Props {
+//     scrollToSearch: () => void
+// }
 
-const Banner: React.FC<Props> = ({scrollToSearch}) => {
+const Banner = () => {
     const opacity = useColorModeValue("0.5", "0.3")
     const bg_gradient = useColorModeValue("linear(to-tl, #E7FFFC , transparent 40%)", "linear(to-tl, #1B2C37 , transparent 40%)")
     return (
@@ -51,7 +52,9 @@ const Banner: React.FC<Props> = ({scrollToSearch}) => {
                         <Text fontSize={{ base:"3xl",sm:"4xl", md:"5xl" }} fontFamily='Jost' fontWeight='1000' letterSpacing={2}>A Pokémon Wikipedia <br/>for Minimalists</Text>
                         <Text fontSize={{ base:"sm", md:"md" }} >Look up your favorite pokémons and everything you want to know about them.</Text>
                         <Flex justifyContent={{ base:"center", md:"left" }} alignItems='center'>
-                            <Button w="40" variant="pri_gradient" onClick={scrollToSearch}>Search Now</Button>
+                            <Link to="/pokemons">
+                                <Button w="40" variant="pri_gradient">Explore now</Button>
+                            </Link>
                         </Flex>
                     </VStack>
                 </Flex>

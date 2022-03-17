@@ -26,8 +26,9 @@ const TypeBadge: React.FC<Props> = ({type}) => {
             bgColor={`type.${type}`} 
             textAlign="center" 
             borderRadius={5}
+            fontFamily="Roboto Mono"
         >
-            <Text color={font_color(type)} fontSize={[ 'x-small', 'xs','sm' ]}>{type}</Text>
+            <Text color={font_color(type)} fontSize={[ 'x-small', 'xs']}>{type}</Text>
         </Box>
     )
 }

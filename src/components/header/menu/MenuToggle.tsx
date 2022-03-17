@@ -8,6 +8,8 @@ import {
 	Box
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 interface Props {
 	toggle: () => void, 
@@ -15,6 +17,8 @@ interface Props {
 }
 
 const MenuToggle: React.FC<Props> = ({ toggle, isOpen }) => {
+	const route = useLocation();
+
 	return (
 		<Box display={{ base: 'block', md: 'none'}} zIndex={20}>
 			<Menu>
@@ -27,15 +31,22 @@ const MenuToggle: React.FC<Props> = ({ toggle, isOpen }) => {
 					_focus={{ boxShadow:"none" }}
 				/>
 				<MenuList>
-					<MenuItem fontWeight="bold">
-						Home
-					</MenuItem>
-					<MenuItem  fontWeight="bold">
-						Technologies
-					</MenuItem>
-					<MenuItem  fontWeight="bold">
-						Projects
-					</MenuItem>
+					<Link to="/" onClick={toggle}>
+						<MenuItem 
+							_focus={{ boxShadow:"none" }}
+							color={route.pathname === '/' ? "brand.100" : ""}
+						>
+							Home
+						</MenuItem>
+					</Link>
+					<Link to="/pokemons" onClick={toggle}>
+						<MenuItem 
+							_focus={{ boxShadow:"none" }}
+							color={route.pathname === '/pokemons' ? "brand.100" : ""}
+						>
+							Pokemons
+						</MenuItem>
+					</Link>
 				</MenuList>
 			</Menu>
 		</Box>

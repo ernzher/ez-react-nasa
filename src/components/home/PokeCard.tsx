@@ -41,8 +41,8 @@ const PokeCard: React.FC<Props> = ({pokemon, renderGender}) => {
                 </Flex>
                 <VStack spacing={3}>
                     <Text fontSize={['xs', 'sm', 'md']} color='gray.500'># {pokemon.id.toLocaleString('en-US', {minimumIntegerDigits: 3})}</Text>
-                    <Flex alignItems='center' fontSize={['md', 'lg','xl']}  mt={0}>
-                        <Text fontWeight={1000} pr={1}>{pokemon.name.replace(/-f|-m/g,'')} </Text>
+                    <Flex alignItems='center' fontSize={['sm', 'md','lg']}  mt={0}>
+                        <Text pr={1} fontFamily="Roboto Mono">{pokemon.name.replace(/-f|-m/g,'')} </Text>
                         { renderGender(pokemon.gender) }
                     </Flex>
                     <HStack py={2} spacing={1}>

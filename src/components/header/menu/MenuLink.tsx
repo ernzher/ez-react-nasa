@@ -20,10 +20,10 @@ const MenuLink = () => {
 						color={route.pathname === '/' ? "brand.100" : ""}
 					>Home</Link>
 					<Link 
-						href="/technologies" 
+						href="/pokemons" 
 						_hover={{ color:"brand.100"}}
-						color={route.pathname === '/technologies' ? "brand.100" : ""}
-					>Technologies</Link>
+						color={route.pathname === '/pokemons' ? "brand.100" : ""}
+					>Pokemons</Link>
 				</HStack>
 			</Flex>
 		</Box>
