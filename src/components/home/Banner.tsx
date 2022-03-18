@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom'
 
 const Banner = () => {
     const opacity = useColorModeValue("0.5", "0.3")
-    const bg_gradient = useColorModeValue("linear(to-tl, #E7FFFC , transparent 40%)", "linear(to-tl, #1B2C37 , transparent 40%)")
+    const bg_gradient = useColorModeValue("linear(to-tl, #E7FFFC , transparent 60%)", "linear(to-tl, #1B2C37 , transparent 60%)")
     return (
         <Box position="relative" bgGradient={bg_gradient} py={{ base:5, md:20 }}>
             <Image 

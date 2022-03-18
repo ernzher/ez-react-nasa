@@ -1,6 +1,6 @@
 import React from 'react'
 import { 
-    Box,
+    Box, Flex, Text, VStack,
 } from '@chakra-ui/react'
 import PokeList from '../components/home/PokeList'
 import { useState, useEffect, useCallback, useRef } from 'react'
@@ -53,8 +53,15 @@ const Pokemons = () => {
        <Box position="relative">
             <Helmet>
                 <meta charSet="utf-8" />
-                <title>{`Pokemons | Pokédex`}</title>
+                <title>{`Pokémons | Pokédex`}</title>
             </Helmet>
+            <Flex justifyContent='center' alignItems='center' py={16} px={5} bgGradient="linear(to-r, , #24adf3, #29deb7)" bgSize='cover' position='relative'>
+                <Box position='absolute' w="100%" h="100%" bgColor='blackAlpha.100'></Box>
+                <VStack color='white' zIndex={20} fontFamily="Roboto">
+                    <Text fontSize={{ base:"3xl",sm:"4xl", md:"5xl" }} fontWeight='1000' letterSpacing={2}>Pokémons</Text>
+                    <Text fontSize={{ base:"sm", md:"md" }}>Explore your favorite pokemons now!</Text>
+                </VStack>
+            </Flex>
             <PokeList 
                 pokemons={pokemons} 
                 loading={loading} 

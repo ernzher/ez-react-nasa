@@ -25,9 +25,9 @@ const PokeList:React.FC<Props> = ({pokemons, loading, lastPokemonElementRef, sea
     return (
         <Box mx={[3, 10, 15, 20]} py={10} position="relative">
             <SimpleGrid columns={{base: 1, md: 2}} mx={5} spacing={5} pb={5}>
-                <Box textAlign={{ base: "center", md: "left"}} cursor="pointer" onClick={() => { searchPokemon(""); clearData(); }} >
-                    <Text color='brand.100' fontFamily='Jost' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
-                    <Text fontSize={{ base:"2xl",sm:"4xl" }} fontFamily='Jost' fontWeight='1000' letterSpacing={2}>Welcome To The Pokédex</Text>          
+                <Box textAlign={{ base: "center", md: "left"}} cursor="pointer" onClick={() => { searchPokemon(""); clearData(); }} fontFamily="Roboto" >
+                    <Text color='brand.100' fontSize={{ base:"md", md:"lg" }}>POKÉMONS</Text>
+                    <Text fontSize={{ base:"2xl",sm:"4xl" }} fontWeight='1000' letterSpacing={2}>Welcome To The Pokédex</Text>          
                 </Box>
                 <SearchBar searchPokemon={searchPokemon} clearData={clearData} isSearching={loading} />
             </SimpleGrid>

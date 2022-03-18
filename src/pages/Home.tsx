@@ -19,18 +19,13 @@ const Home = () => {
                 <title>{`Home | Pokédex`}</title>
             </Helmet>
             <Banner />
-    
-
-            <Flex justifyContent='center' alignItems='center' py={16} px={5} bgGradient="linear(to-r, , #24adf3, #29deb7)" bgSize='cover' position='relative'>
-                <Box position='absolute' w="100%" h="100%" bgColor='blackAlpha.100'></Box>
-                <VStack color='white' zIndex={20}>
-                    <Text fontSize={{ base:"3xl",sm:"4xl", md:"5xl" }} fontFamily='Jost' fontWeight='1000' letterSpacing={2}>Technologies</Text>
+            <VStack align="left" px={{ base: 5, md: 20 }} py={10} spacing={5}>
+                <VStack textAlign='center' py={5} fontFamily="Jost">
+                    <Text fontSize={{ base:"md", md:"xl" }} color="brand.100">TECHNOLOGIES</Text>
+                    <Text fontSize={{ base:"2xl", md:"4xl"}} letterSpacing={2} fontWeight='bold'>Technologies & Stacks</Text>
                     <Text fontSize={{ base:"sm", md:"md" }}>Every tool used to develop this project.</Text>
                 </VStack>
-
-            </Flex>
-            <VStack align="left" p={{ base: 5, md: 20 }} spacing={5}>
-                <Text fontSize={{ base:"2xl",sm:"3xl", md:"4xl"}} letterSpacing={2}>Technology Stack</Text>
+                
                 <Divider bgColor='brand.100' height={.5} />
                 <VStack align="left" color="gray.500" spacing={5}>
                     <VStack align="left" spacing={5} py={5}>
