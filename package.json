@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://poki-dex.herokuapp.com",
-  "homepage": "https://ernzher-pokedex.com",
+  "homepage": "https://ernzher.github.io/ez-react-pokedex/",
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.8.6",
