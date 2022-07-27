@@ -42,7 +42,7 @@ const Home = () => {
                             </VStack>
                             <VStack>
                                 <FaReact size={50}/>
-                                <Text>React.tsx</Text>
+                                <Text>React</Text>
                             </VStack>
                             <VStack>
                                 <FaBolt size={50}/>

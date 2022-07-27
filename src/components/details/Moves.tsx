@@ -8,15 +8,13 @@ import {
     Center
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
-import { PokemonDetails } from '../../hooks/usePokemons';
+import { useRecoilValue } from 'recoil';
+import { pokemonDetailsState } from '../../atoms/pokemonDetails';
 
-interface Props {
-    pokemon: PokemonDetails,
-}
-
-const Moves: React.FC<Props> = ({ pokemon }) => {
+const Moves = () => {
     const chunkNum = useBreakpointValue([2, 3, 4, 5, 6])
     const [moveLists, setMoveLists] = useState<string[][]>() 
+    const pokemon = useRecoilValue(pokemonDetailsState) as any;
 
     useEffect(() => {
         let chunkedList = []

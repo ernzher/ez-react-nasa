@@ -4,7 +4,7 @@ import {
     Box,
     SimpleGrid,
     Flex,
-    useColorModeValue
+    useColorModeValue,
 } from '@chakra-ui/react'
 import MenuLink from './menu/MenuLink'
 import MenuToggle from './menu/MenuToggle'
@@ -46,7 +46,7 @@ const Header = () => {
                 <Logo />
                 <MenuLink />
                 <Flex justifyContent='right' alignItems='center'>
-                    <ColorModeSwitcher  />
+                    <ColorModeSwitcher />
                     <MenuToggle toggle={toggle} isOpen={isOpen} />
                 </Flex>
             </SimpleGrid>

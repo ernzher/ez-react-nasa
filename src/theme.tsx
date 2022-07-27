@@ -82,7 +82,7 @@ const theme = extendTheme({
                 },
                 snd_gradient: {
                     bgGradient: "linear(to-r, #6c90ff, #7ef2f6)",
-                    color: "black",
+                    color: "white",
                     borderRadius: 30,
                 },
             }

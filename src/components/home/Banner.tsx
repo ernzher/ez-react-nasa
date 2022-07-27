@@ -11,10 +11,6 @@ import {
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
-// interface Props {
-//     scrollToSearch: () => void
-// }
-
 const Banner = () => {
     const opacity = useColorModeValue("0.5", "0.3")
     const bg_gradient = useColorModeValue("linear(to-tl, #E7FFFC , transparent 60%)", "linear(to-tl, #1B2C37 , transparent 60%)")

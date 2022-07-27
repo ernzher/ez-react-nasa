@@ -3,10 +3,10 @@ import { Box, Button } from '@chakra-ui/react'
 import { ArrowUpIcon } from '@chakra-ui/icons'
 import { useState, useEffect, useCallback } from 'react'
 
-interface Props {
+type ScrollToButtonProps = {
     scrollToFunction: () => void
 }
-const ScrollToButton: React.FC<Props> = ({ scrollToFunction }) => {
+const ScrollToButton = ({ scrollToFunction }: ScrollToButtonProps) => {
     const [y, setY] = useState(window.scrollY);
     const [currentState, setCurrentState] = useState(true) //scrolling up: true; scrolling down: false
 
