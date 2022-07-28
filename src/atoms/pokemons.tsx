@@ -27,6 +27,11 @@ export const loadingState = atom<boolean>({
 });
 
 export const hasMoreState = atom<boolean>({
-  key: "hasMore",
+  key: "HasMore",
   default: true,
 });
+
+export const scrollPositionState = atom<number>({
+  key: "ScrollPosition",
+  default: 0
+})

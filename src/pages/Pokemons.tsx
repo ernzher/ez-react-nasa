@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import PokeList from "../components/home/PokeList";
 import { useEffect, useCallback, useRef } from "react";
 import usePokemons from "../hooks/usePokemons";
 import ScrollToButton from "../components/common/ScrollToButton";
 import { Helmet } from "react-helmet-async";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   hasMoreState,
   loadingState,
   offsetState,
   pageNumberState,
+  scrollPositionState,
   searchQueryState,
 } from "../atoms/pokemons";
+import { useDebounce } from "use-debounce";
 
 const Pokemons = () => {
   const setOffset = useSetRecoilState(offsetState);
@@ -21,6 +23,30 @@ const Pokemons = () => {
   const hasMore = useRecoilValue(hasMoreState);
   const query = useRecoilValue(searchQueryState);
   const { searchPokemon } = usePokemons();
+
+  //all for scrolling////////////////////////////////////
+  const [scrollPosition, setScrollPosition] =
+    useRecoilState(scrollPositionState);
+  const [tempScrollPosition, setTempScrollPosition] = useState(0);
+  const [value] = useDebounce(tempScrollPosition, 200);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollPosition);
+    window.addEventListener("scroll", () =>
+      setTempScrollPosition(window.scrollY)
+    );
+    return () => {
+      window.removeEventListener("scroll", () =>
+        setTempScrollPosition(window.scrollY)
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    setScrollPosition(value);
+  }, [value]);
+
+  //all for scrolling////////////////////////////////////
 
   const observer = useRef<any>();
   const lastPokemonElementRef = useCallback(
@@ -38,10 +64,6 @@ const Pokemons = () => {
     },
     [loading, hasMore]
   );
-
-  //   useEffect(() => {
-  //     clearData();
-  //   }, [query]);
 
   const clearData = (): void => {
     setOffset(0);
